@@ -5,7 +5,7 @@
   "team": "Equipe Commerce",
   "version": "v1",
   "endpoints": [
-    "POST /v4/orders",
+    "POST /v8/orders",
     "GET /v5/orders/{id}",
     "PUT /v6/orders/{id}/cancel",
     "GET /v7/orders?customerId={id}"
