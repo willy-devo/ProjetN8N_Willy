@@ -8,6 +8,6 @@
     "POST /v4/orders",
     "GET /v5/orders/{id}",
     "PUT /v6/orders/{id}/cancel",
-    "GET /v3/orders?customerId={id}"
+    "GET /v7/orders?customerId={id}"
   ]
 }
