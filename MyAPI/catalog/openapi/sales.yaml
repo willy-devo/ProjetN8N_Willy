@@ -1,0 +1,185 @@
+openapi: 3.0.0
+info:
+  title: Sales & Transaction API
+  description: >-
+    Ce service est le moteur de transaction du magasin. Il gère le processus de 
+    paiement (checkout) et permet de consulter l'historique complet des commandes 
+    pour le suivi client et l'analyse financière.
+  version: 1.0.0
+  x-api-version: "1.0.0"
+
+servers:
+  - url: http://localhost:8000/v1
+    description: Passerelle API Kong (Environnement de développement)
+
+paths:
+  /orders:
+    get:
+      summary: Liste l'historique global des transactions
+      operationId: listOrders
+      tags:
+        - Sales
+      parameters:
+        - name: customer_id
+          in: query
+          description: Filtrer les commandes par identifiant client (CUST-XXX).
+          schema:
+            type: string
+        - name: status
+          in: query
+          description: Filtrer par état (pending, shipped, delivered, cancelled).
+          schema:
+            type: string
+            enum: [pending, shipped, delivered, cancelled]
+      responses:
+        '200':
+          description: Liste des commandes récupérée avec succès.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Order'
+
+  /orders/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Identifiant unique de la commande (Format CMD-YYYY-XXX).
+        schema:
+          type: string
+          pattern: '^CMD-[0-9]{4}-[0-9]{3}$'
+          example: "CMD-2026-001"
+    get:
+      summary: Détails d'une commande spécifique
+      operationId: getOrderById
+      tags:
+        - Sales
+      responses:
+        '200':
+          description: Détails complets de la transaction et du statut de paiement.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /checkout:
+    post:
+      summary: Création d'une nouvelle commande (Validation panier)
+      description: Valide la transaction, diminue le stock et génère la référence de commande.
+      operationId: createOrder
+      tags:
+        - Sales
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - customer_id
+                - items
+                - payment_method
+              properties:
+                customer_id:
+                  type: string
+                  example: "CUST-001"
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      product_id:
+                        type: string
+                        example: "PROD-101"
+                      quantity:
+                        type: integer
+                        example: 1
+                payment_method:
+                  type: string
+                  enum: [CB, PayPal, Transfer]
+                  example: "CB"
+      responses:
+        '201':
+          description: Commande créée avec succès.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: Erreur de validation (ex: stock insuffisant).
+
+components:
+  schemas:
+    Order:
+      type: object
+      required:
+        - order_id
+        - customer_id
+        - items
+        - total_amount
+        - status
+      properties:
+        order_id:
+          type: string
+          example: "CMD-2026-001"
+        customer_id:
+          type: string
+          example: "CUST-001"
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              product_id:
+                type: string
+                example: "PROD-101"
+              quantity:
+                type: integer
+                example: 1
+        total_amount:
+          type: number
+          format: float
+          example: 2499.00
+        status:
+          type: string
+          enum: [pending, shipped, delivered, cancelled]
+          example: "delivered"
+        payment_method:
+          type: string
+          example: "CB"
+        created_at:
+          type: string
+          format: date-time
+          example: "2026-04-01T09:15:00Z"
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: "ORDER_NOT_FOUND"
+            message:
+              type: string
+              example: "La référence de commande est invalide."
+            at:
+              type: string
+              format: date-time
+              example: "2026-04-15T12:00:00Z"
+
+  responses:
+    NotFoundError:
+      description: La commande n'existe pas.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

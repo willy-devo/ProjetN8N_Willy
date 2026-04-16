@@ -1,0 +1,163 @@
+openapi: 3.0.0
+info:
+  title: Inventory & Product Catalog API
+  description: >-
+    Ce service gère l'inventaire matériel du magasin. Il permet la consultation 
+    technique des produits et expose un moteur de recherche sémantique pour 
+    l'identification de produits par intention d'achat.
+  version: 1.0.0
+  x-api-version: "1.0.0"
+
+servers:
+  - url: http://localhost:8000/v1
+    description: Passerelle API Kong (Environnement de développement)
+
+paths:
+  /products:
+    get:
+      summary: Liste le catalogue de produits
+      operationId: listProducts
+      tags:
+        - Inventory
+      parameters:
+        - name: category
+          in: query
+          description: Filtrer par catégorie (ex. Laptops, Audio, Components)
+          schema:
+            type: string
+        - name: brand
+          in: query
+          description: Filtrer par marque fabricant
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Succès - Retourne une liste de produits simplifiée.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+
+  /products/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Identifiant unique du produit (Format PROD-XXX).
+        schema:
+          type: string
+          pattern: '^PROD-[0-9]{3}$'
+          example: "PROD-101"
+    get:
+      summary: Récupère les détails techniques complets d'un produit
+      operationId: getProductById
+      tags:
+        - Inventory
+      responses:
+        '200':
+          description: Fiche produit détaillée récupérée (incluant specs et stock).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductDetail'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /products/search:
+    get:
+      summary: Recherche sémantique par intention
+      description: >-
+        Permet de trouver des produits en utilisant le langage naturel. 
+        L'IA analyse la description riche pour faire correspondre l'intention.
+      operationId: searchProducts
+      tags:
+        - Inventory
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: Requête en langage naturel (ex. "PC pour gaming 4K").
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Résultats de la recherche sémantique.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "PROD-101"
+        name:
+          type: string
+          example: "TitanBook Pro 16"
+        brand:
+          type: string
+          example: "TechCorp"
+        category:
+          type: string
+          example: "Laptops"
+        price:
+          type: number
+          format: float
+          example: 2499.00
+
+    ProductDetail:
+      allOf:
+        - $ref: '#/components/schemas/Product'
+        - type: object
+          properties:
+            specs:
+              type: object
+              additionalProperties: true
+              description: Caractéristiques techniques (CPU, RAM, GPU, etc.).
+              example: {"cpu": "M3 Max", "ram": "64GB"}
+            description:
+              type: string
+              description: Description riche utilisée pour le RAG.
+            stock:
+              type: integer
+              minimum: 0
+              example: 15
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: "PRODUCT_NOT_FOUND"
+            message:
+              type: string
+              example: "Le produit spécifié n'existe pas."
+            at:
+              type: string
+              format: date-time
+              example: "2026-04-15T12:00:00Z"
+
+  responses:
+    NotFoundError:
+      description: La ressource demandée n'existe pas.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

@@ -1,0 +1,153 @@
+openapi: 3.0.0
+info:
+  title: Marketing & Loyalty API
+  description: >-
+    Ce service gère les programmes de fidélité, l'exécution de campagnes 
+    promotionnelles ciblées et l'analyse des tendances de consommation basées 
+    sur les centres d'intérêt des clients.
+  version: 1.0.0
+  x-api-version: "1.0.0"
+
+servers:
+  - url: http://localhost:8000/v1
+    description: Passerelle API Kong (Environnement de développement)
+
+paths:
+  /loyalty/{cust_id}:
+    parameters:
+      - name: cust_id
+        in: path
+        required: true
+        description: Identifiant unique du client (Format CUST-XXX).
+        schema:
+          type: string
+          pattern: '^CUST-[0-9]{3}$'
+          example: "CUST-001"
+    get:
+      summary: Récupère le solde de points et les avantages fidélité
+      operationId: getLoyaltyStatus
+      tags:
+        - Loyalty
+      responses:
+        '200':
+          description: État du compte fidélité récupéré.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoyaltyProfile'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /campaigns:
+    post:
+      summary: Envoi d'offres ciblées selon les centres d'intérêt
+      description: Déclenche une campagne marketing basée sur le ciblage sémantique des 'interests' clients.
+      operationId: launchCampaign
+      tags:
+        - Campaigns
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - campaign_name
+                - target_interest
+                - discount_rate
+              properties:
+                campaign_name:
+                  type: string
+                  example: "Summer Gaming Sale 2026"
+                target_interest:
+                  type: string
+                  description: Centre d'intérêt cible (ex. Gaming, Audio).
+                  example: "Gaming"
+                discount_rate:
+                  type: integer
+                  minimum: 5
+                  maximum: 50
+                  example: 15
+      responses:
+        '202':
+          description: Campagne acceptée et mise en file d'attente pour envoi.
+        '400':
+          description: Paramètres de campagne invalides.
+
+  /trends:
+    get:
+      summary: Analyse des produits les plus consultés
+      description: Retourne les tendances actuelles du marché pour l'aide à la décision.
+      operationId: getMarketTrends
+      tags:
+        - Analytics
+      responses:
+        '200':
+          description: Liste des tendances et produits populaires.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  top_categories:
+                    type: array
+                    items:
+                      type: string
+                    example: ["Laptops", "GPU"]
+                  trending_products:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        product_id:
+                          type: string
+                          example: "PROD-101"
+                        view_count:
+                          type: integer
+                          example: 1250
+
+components:
+  schemas:
+    LoyaltyProfile:
+      type: object
+      properties:
+        customer_id:
+          type: string
+          example: "CUST-001"
+        points_balance:
+          type: integer
+          example: 1500
+        tier:
+          type: string
+          enum: [Bronze, Silver, Gold, Platinum]
+          example: "Gold"
+        available_rewards:
+          type: array
+          items:
+            type: string
+          example: ["Free Shipping", "5% Discount Voucher"]
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: "LOYALTY_DATA_UNAVAILABLE"
+            message:
+              type: string
+              example: "Impossible de récupérer les données de fidélité pour ce client."
+            at:
+              type: string
+              format: date-time
+              example: "2026-04-15T12:05:00Z"
+
+  responses:
+    NotFoundError:
+      description: Client ou donnée marketing introuvable.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
