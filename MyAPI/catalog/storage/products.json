@@ -1,0 +1,154 @@
+{
+  "products": [
+    {
+      "id": "PROD-101",
+      "name": "TitanBook Pro 16",
+      "brand": "TechCorp",
+      "category": "Laptops",
+      "price": 2499.00,
+      "specs": {
+        "processor": "Octa-core 3.8GHz",
+        "ram": "32GB DDR5",
+        "storage": "1TB SSD NVMe",
+        "display": "OLED 120Hz"
+      },
+      "description": "Station de travail mobile conçue pour les professionnels créatifs. Son écran à haute fréquence de rafraîchissement offre une fluidité exceptionnelle pour le montage vidéo et le design 3D.",
+      "stock": 15
+    },
+    {
+      "id": "PROD-102",
+      "name": "OpticView 27 4K",
+      "brand": "PixelMaster",
+      "category": "Monitors",
+      "price": 599.50,
+      "specs": {
+        "resolution": "3840x2160",
+        "panel": "IPS",
+        "brightness": "400 nits",
+        "connectivity": "HDMI 2.1, DP 1.4"
+      },
+      "description": "Moniteur ultra-haute définition avec une précision colorimétrique certifiée. Idéal pour les photographes et les graphistes cherchant un rendu fidèle des couleurs.",
+      "stock": 25
+    },
+    {
+      "id": "PROD-103",
+      "name": "SonicPulse Hybrid",
+      "brand": "AudioPure",
+      "category": "Audio",
+      "price": 349.00,
+      "specs": {
+        "type": "Wireless Over-ear",
+        "noise_cancelling": "Active Adaptive",
+        "battery_life": "40h",
+        "codecs": "LDAC, aptX Adaptive"
+      },
+      "description": "Casque audio haut de gamme doté d'une réduction de bruit intelligente. Il offre une immersion sonore totale, que ce soit dans les transports ou dans un bureau bruyant.",
+      "stock": 50
+    },
+    {
+      "id": "PROD-104",
+      "name": "SwiftTab Air 11",
+      "brand": "NomadTech",
+      "category": "Tablets",
+      "price": 799.00,
+      "specs": {
+        "processor": "M2 Chip",
+        "ram": "8GB",
+        "storage": "256GB",
+        "weight": "460g"
+      },
+      "description": "Tablette ultra-légère conçue pour la productivité en déplacement. Parfaite pour la prise de notes, le dessin numérique et la consultation de documents complexes.",
+      "stock": 30
+    },
+    {
+      "id": "PROD-105",
+      "name": "CorePower G12",
+      "brand": "EnergyMax",
+      "category": "Components",
+      "price": 189.99,
+      "specs": {
+        "wattage": "850W",
+        "efficiency": "80 Plus Gold",
+        "modularity": "Full Modular",
+        "fan": "Silent 135mm"
+      },
+      "description": "Unité d'alimentation robuste et silencieuse pour configurations gaming avancées. Sa certification Gold garantit une efficacité énergétique optimale sous forte charge.",
+      "stock": 12
+    },
+    {
+      "id": "PROD-106",
+      "name": "SecureNode NAS 4",
+      "brand": "DataGuard",
+      "category": "Storage",
+      "price": 450.00,
+      "specs": {
+        "bays": "4-Bay",
+        "cpu": "Quad-core 2.0GHz",
+        "ram": "4GB DDR4",
+        "lan": "Dual 2.5GbE"
+      },
+      "description": "Serveur de stockage en réseau sécurisé pour les petites entreprises. Permet la sauvegarde automatique des données et le streaming multimédia haute vitesse.",
+      "stock": 8
+    },
+    {
+      "id": "PROD-107",
+      "name": "GhostKey Mechanical",
+      "brand": "InputPro",
+      "category": "Peripherals",
+      "price": 129.00,
+      "specs": {
+        "switches": "Cherry MX Red",
+        "layout": "Tenkeyless",
+        "lighting": "RGB Per-key",
+        "polling_rate": "1000Hz"
+      },
+      "description": "Clavier mécanique compact pour joueurs exigeants. Ses switches linéaires offrent une réactivité maximale pour les jeux de tir à la première personne.",
+      "stock": 40
+    },
+    {
+      "id": "PROD-108",
+      "name": "VisionLink WebCam 5K",
+      "brand": "StreamFlow",
+      "category": "Accessories",
+      "price": 199.00,
+      "specs": {
+        "resolution": "5K 30fps / 4K 60fps",
+        "field_of_view": "90 degrees",
+        "mic": "Dual Noise-cancelling",
+        "focus": "Auto-AI"
+      },
+      "description": "Caméra de conférence haute résolution avec suivi automatique par intelligence artificielle. Assure une clarté d'image exceptionnelle pour le streaming et le télétravail.",
+      "stock": 20
+    },
+    {
+      "id": "PROD-109",
+      "name": "NitroX GPU 5000",
+      "brand": "SpeedForce",
+      "category": "Components",
+      "price": 899.00,
+      "specs": {
+        "vram": "16GB GDDR6X",
+        "clock_speed": "2.5GHz",
+        "cooling": "Triple Fan",
+        "ray_tracing": "Gen 3"
+      },
+      "description": "Carte graphique de nouvelle génération capable de faire tourner les derniers jeux en résolution 4K avec ray-tracing activé. Un monstre de puissance brute.",
+      "stock": 5
+    },
+    {
+      "id": "PROD-110",
+      "name": "EcoCharge Solar Hub",
+      "brand": "GreenGrid",
+      "category": "Accessories",
+      "price": 85.00,
+      "specs": {
+        "capacity": "20000mAh",
+        "solar_panel": "Monocrystalline",
+        "outputs": "3x USB-C PD",
+        "durability": "IP67"
+      },
+      "description": "Batterie externe solaire ultra-résistante pour les expéditions en plein air. Capable de recharger plusieurs appareils simultanément grâce à l'énergie renouvelable.",
+      "stock": 60
+    }
+  ]
+}

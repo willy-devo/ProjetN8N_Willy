@@ -1,0 +1,141 @@
+{
+  "orders": [
+    {
+      "order_id": "CMD-2026-001",
+      "customer_id": "CUST-001",
+      "items": [
+        { "product_id": "PROD-101", "quantity": 1 }
+      ],
+      "total_amount": 2499.00,
+      "status": "delivered",
+      "payment_method": "CB",
+      "created_at": "2026-04-01T09:15:00Z"
+    },
+    {
+      "order_id": "CMD-2026-002",
+      "customer_id": "CUST-002",
+      "items": [
+        { "product_id": "PROD-102", "quantity": 2 },
+        { "product_id": "PROD-107", "quantity": 1 }
+      ],
+      "total_amount": 1328.00,
+      "status": "delivered",
+      "payment_method": "PayPal",
+      "created_at": "2026-04-02T14:30:00Z"
+    },
+    {
+      "order_id": "CMD-2026-003",
+      "customer_id": "CUST-003",
+      "items": [
+        { "product_id": "PROD-103", "quantity": 1 }
+      ],
+      "total_amount": 349.00,
+      "status": "shipped",
+      "payment_method": "CB",
+      "created_at": "2026-04-05T11:00:00Z"
+    },
+    {
+      "order_id": "CMD-2026-004",
+      "customer_id": "CUST-001",
+      "items": [
+        { "product_id": "PROD-108", "quantity": 1 },
+        { "product_id": "PROD-110", "quantity": 2 }
+      ],
+      "total_amount": 369.00,
+      "status": "delivered",
+      "payment_method": "CB",
+      "created_at": "2026-04-06T16:45:00Z"
+    },
+    {
+      "order_id": "CMD-2026-005",
+      "customer_id": "CUST-004",
+      "items": [
+        { "product_id": "PROD-109", "quantity": 1 }
+      ],
+      "total_amount": 899.00,
+      "status": "pending",
+      "payment_method": "Transfer",
+      "created_at": "2026-04-08T10:20:00Z"
+    },
+    {
+      "order_id": "CMD-2026-006",
+      "customer_id": "CUST-005",
+      "items": [
+        { "product_id": "PROD-104", "quantity": 1 },
+        { "product_id": "PROD-107", "quantity": 1 }
+      ],
+      "total_amount": 928.00,
+      "status": "cancelled",
+      "payment_method": "PayPal",
+      "created_at": "2026-04-09T13:10:00Z"
+    },
+    {
+      "order_id": "CMD-2026-007",
+      "customer_id": "CUST-006",
+      "items": [
+        { "product_id": "PROD-105", "quantity": 3 }
+      ],
+      "total_amount": 569.97,
+      "status": "shipped",
+      "payment_method": "CB",
+      "created_at": "2026-04-10T08:50:00Z"
+    },
+    {
+      "order_id": "CMD-2026-008",
+      "customer_id": "CUST-002",
+      "items": [
+        { "product_id": "PROD-110", "quantity": 5 }
+      ],
+      "total_amount": 425.00,
+      "status": "delivered",
+      "payment_method": "CB",
+      "created_at": "2026-04-11T17:00:00Z"
+    },
+    {
+      "order_id": "CMD-2026-009",
+      "customer_id": "CUST-007",
+      "items": [
+        { "product_id": "PROD-106", "quantity": 1 },
+        { "product_id": "PROD-102", "quantity": 1 }
+      ],
+      "total_amount": 1049.50,
+      "status": "pending",
+      "payment_method": "Transfer",
+      "created_at": "2026-04-12T12:00:00Z"
+    },
+    {
+      "order_id": "CMD-2026-010",
+      "customer_id": "CUST-008",
+      "items": [
+        { "product_id": "PROD-101", "quantity": 2 }
+      ],
+      "total_amount": 4998.00,
+      "status": "shipped",
+      "payment_method": "CB",
+      "created_at": "2026-04-13T15:30:00Z"
+    },
+    {
+      "order_id": "CMD-2026-011",
+      "customer_id": "CUST-001",
+      "items": [
+        { "product_id": "PROD-105", "quantity": 1 }
+      ],
+      "total_amount": 189.99,
+      "status": "pending",
+      "payment_method": "PayPal",
+      "created_at": "2026-04-14T09:00:00Z"
+    },
+    {
+      "order_id": "CMD-2026-012",
+      "customer_id": "CUST-009",
+      "items": [
+        { "product_id": "PROD-103", "quantity": 2 },
+        { "product_id": "PROD-108", "quantity": 1 }
+      ],
+      "total_amount": 897.00,
+      "status": "shipped",
+      "payment_method": "CB",
+      "created_at": "2026-04-14T10:45:00Z"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "employees": [
+    {
+      "emp_id": "EMP-442",
+      "full_name": "Alice Martin",
+      "role": "Cloud Architect",
+      "department": "IT Infrastructure",
+      "skills": ["AWS", "Kubernetes", "API Gateway", "Python", "Terraform"],
+      "clearance": 4,
+      "biography": "Experte en conception d'architectures distribuées avec plus de 10 ans d'expérience. Alice supervise la migration vers le micro-services et l'automatisation de la passerelle API Kong pour l'ensemble du groupe."
+    },
+    {
+      "emp_id": "EMP-102",
+      "full_name": "Thomas Bernard",
+      "role": "Directeur Logistique",
+      "department": "Logistics",
+      "skills": ["Supply Chain", "ERP", "Gestion de flotte", "Optimisation des flux"],
+      "clearance": 3,
+      "biography": "Ancien responsable d'entrepôt, Thomas gère désormais l'intégralité de la chaîne d'approvisionnement. Il est spécialisé dans la réduction des délais de livraison et l'automatisation des inventaires physiques."
+    },
+    {
+      "emp_id": "EMP-205",
+      "full_name": "Sarah El Fassi",
+      "role": "Analyste Financière",
+      "department": "Finance",
+      "skills": ["Audit", "Comptabilité analytique", "Excel VBA", "Reporting"],
+      "clearance": 5,
+      "biography": "Sarah est responsable de la conformité fiscale et des audits internes. Elle possède une accréditation de niveau 5 pour accéder aux données sensibles de facturation et aux rapports de profits annuels."
+    },
+    {
+      "emp_id": "EMP-308",
+      "full_name": "Lucas Petit",
+      "role": "Chef de Secteur Ventes",
+      "department": "Sales",
+      "skills": ["Négociation B2B", "CRM", "Management d'équipe", "Stratégie commerciale"],
+      "clearance": 2,
+      "biography": "Expert du secteur de l'électronique grand public, Lucas dirige l'équipe commerciale pour la région Nord. Il fait le lien entre les retours clients et le catalogue produit pour adapter nos offres."
+    },
+    {
+      "emp_id": "EMP-512",
+      "full_name": "Julie Rousseau",
+      "role": "Responsable RH",
+      "department": "HR",
+      "skills": ["Recrutement IT", "Droit du travail", "Gestion des carrières", "Médiation"],
+      "clearance": 4,
+      "biography": "Julie se spécialise dans le recrutement de profils techniques hautement qualifiés. Elle gère également les plans de formation interne sur les nouvelles technologies IA et Cloud pour les employés."
+    },
+    {
+      "emp_id": "EMP-619",
+      "full_name": "Marc Lambert",
+      "role": "Data Scientist",
+      "department": "IT Infrastructure",
+      "skills": ["Machine Learning", "NLP", "SQL", "PyTorch", "Analyse sémantique"],
+      "clearance": 3,
+      "biography": "Passionné par l'intelligence artificielle, Marc travaille sur l'intégration d'agents conversationnels au sein du catalogue d'entreprise. Il aide à structurer les données pour les rendre 'IA-Ready'."
+    }
+  ]
+}

@@ -1,0 +1,171 @@
+openapi: 3.0.0
+info:
+  title: Finance & Billing API
+  description: >-
+    Ce service gère la facturation, le reporting du chiffre d'affaires et la 
+    conformité fiscale (TVA, taxes d'export). Il permet de générer des documents 
+    comptables liés aux transactions.
+  version: 1.0.0
+  x-api-version: "1.0.0"
+
+servers:
+  - url: http://localhost:8000/v1
+    description: Passerelle API Kong (Environnement de développement)
+
+paths:
+  /invoices/{order_id}:
+    parameters:
+      - name: order_id
+        in: path
+        required: true
+        description: Référence de la commande (Format CMD-YYYY-XXX).
+        schema:
+          type: string
+          pattern: '^CMD-[0-9]{4}-[0-9]{3}$'
+          example: "CMD-2026-001"
+    get:
+      summary: Récupération de la facture
+      description: Retourne les données de facturation détaillées. Le format peut être spécifié via le header Accept.
+      operationId: getInvoiceByOrderId
+      tags:
+        - Finance
+      responses:
+        '200':
+          description: Facture récupérée avec succès.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Invoice'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /revenue/stats:
+    get:
+      summary: Analyse du chiffre d'affaires par période
+      description: Calcule les revenus totaux sur une plage de dates donnée.
+      operationId: getRevenueStats
+      tags:
+        - Finance
+      parameters:
+        - name: start_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          example: "2026-01-01"
+        - name: end_date
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          example: "2026-03-31"
+      responses:
+        '200':
+          description: Statistiques financières générées.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  total_revenue:
+                    type: number
+                    format: float
+                    example: 125400.50
+                  currency:
+                    type: string
+                    example: "EUR"
+                  order_count:
+                    type: integer
+                    example: 450
+
+  /tax/report:
+    get:
+      summary: Calcul de la TVA et taxes d'export
+      description: Génère un rapport fiscal consolidé pour la comptabilité.
+      operationId: getTaxReport
+      tags:
+        - Finance
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+          example: "2026-Q1"
+      responses:
+        '200':
+          description: Rapport fiscal prêt.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  vat_total:
+                    type: number
+                    format: float
+                    example: 25080.10
+                  export_taxes:
+                    type: number
+                    format: float
+                    example: 1205.00
+
+components:
+  schemas:
+    Invoice:
+      type: object
+      required:
+        - invoice_id
+        - order_id
+        - amount_ht
+        - amount_ttc
+      properties:
+        invoice_id:
+          type: string
+          example: "INV-2026-884"
+        order_id:
+          type: string
+          example: "CMD-2026-001"
+        billing_date:
+          type: string
+          format: date-time
+          example: "2026-04-01T10:00:00Z"
+        amount_ht:
+          type: number
+          format: float
+          example: 2082.50
+        vat_rate:
+          type: number
+          example: 20.0
+        amount_ttc:
+          type: number
+          format: float
+          example: 2499.00
+        currency:
+          type: string
+          example: "EUR"
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: "FINANCE_DATA_NOT_FOUND"
+            message:
+              type: string
+              example: "Impossible de localiser les données financières demandées."
+            at:
+              type: string
+              format: date-time
+              example: "2026-04-15T12:00:00Z"
+
+  responses:
+    NotFoundError:
+      description: Donnée introuvable.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

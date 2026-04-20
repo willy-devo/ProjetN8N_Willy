@@ -1,0 +1,77 @@
+services:
+  # --- Service Inventory ---
+  mock-inventory:
+    image: stoplight/prism:4
+    container_name: prism-inventory
+    command: mock -h 0.0.0.0 -p 4010 /openapi/inventory.yaml --dynamic
+    volumes:
+      - ./catalog/openapi:/openapi:ro
+    ports:
+      - "4010:4010"
+    networks:
+      - api-network
+
+  # --- Service Customers ---
+  mock-customers:
+    image: stoplight/prism:4
+    container_name: prism-customers
+    command: mock -h 0.0.0.0 -p 4011 /openapi/customers.yaml --dynamic
+    volumes:
+      - ./catalog/openapi:/openapi:ro
+    ports:
+      - "4011:4011"
+    networks:
+      - api-network
+
+  # --- Service Finance ---
+  mock-finance:
+    image: stoplight/prism:4
+    container_name: prism-finance
+    command: mock -h 0.0.0.0 -p 4012 /openapi/finance.yaml --dynamic
+    volumes:
+      - ./catalog/openapi:/openapi:ro
+    ports:
+      - "4012:4012"
+    networks:
+      - api-network
+
+  # --- Service HR ---
+  mock-hr:
+    image: stoplight/prism:4
+    container_name: prism-hr
+    command: mock -h 0.0.0.0 -p 4013 /openapi/hr.yaml --dynamic
+    volumes:
+      - ./catalog/openapi:/openapi:ro
+    ports:
+      - "4013:4013"
+    networks:
+      - api-network
+
+  # --- Service Logistics ---
+  mock-logistics:
+    image: stoplight/prism:4
+    container_name: prism-logistics
+    command: mock -h 0.0.0.0 -p 4014 /openapi/logistics.yaml --dynamic
+    volumes:
+      - ./catalog/openapi:/openapi:ro
+    ports:
+      - "4014:4014"
+    networks:
+      - api-network
+
+  # --- Service Sales ---
+  mock-sales:
+    image: stoplight/prism:4
+    container_name: prism-sales
+    command: mock -h 0.0.0.0 -p 4015 /openapi/sales.yaml --dynamic
+    volumes:
+      - ./catalog/openapi:/openapi:ro
+    ports:
+      - "4015:4015"
+    networks:
+      - api-network
+
+# Définition du réseau commun
+networks:
+  api-network:
+    driver: bridge

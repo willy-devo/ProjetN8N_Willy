@@ -1,0 +1,151 @@
+openapi: 3.0.0
+info:
+  title: HR & Staff Directory API
+  description: >-
+    Ce service gère l'annuaire des collaborateurs de l'entreprise. Il permet de 
+    consulter les profils des employés, leurs biographies et leurs compétences 
+    techniques (skills) afin d'identifier les experts internes.
+  version: 1.0.0
+  x-api-version: "1.0.0"
+
+servers:
+  - url: http://localhost:8000/v1
+    description: Passerelle API Kong (Environnement de développement)
+
+paths:
+  /employees:
+    get:
+      summary: Liste le personnel de l'entreprise
+      operationId: listEmployees
+      tags:
+        - HR
+      parameters:
+        - name: department
+          in: query
+          description: Filtrer par département (ex. IT, Sales, Logistics)
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Liste des employés récupérée avec succès.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  employees:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Employee'
+
+  /employees/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Identifiant unique de l'employé (Format EMP-XXX).
+        schema:
+          type: string
+          pattern: '^EMP-[0-9]{3}$'
+          example: "EMP-001"
+    get:
+      summary: Récupère le profil détaillé d'un collaborateur
+      operationId: getEmployeeById
+      tags:
+        - HR
+      responses:
+        '200':
+          description: Profil complet incluant la biographie et les compétences.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmployeeDetail'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /employees/expertise:
+    get:
+      summary: Recherche d'un expert par domaine technique
+      description: >-
+        Permet de trouver des collaborateurs possédant des compétences spécifiques 
+        dans un domaine (ex. "Kubernetes", "API Gateway").
+      operationId: searchExpertise
+      tags:
+        - HR
+      parameters:
+        - name: skill
+          in: query
+          required: true
+          description: La compétence technique recherchée.
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Liste des experts correspondant à la compétence.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  experts:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Employee'
+
+components:
+  schemas:
+    Employee:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "EMP-001"
+        full_name:
+          type: string
+          example: "Alice Martin"
+        role:
+          type: string
+          example: "Architecte Cloud"
+        department:
+          type: string
+          example: "IT"
+
+    EmployeeDetail:
+      allOf:
+        - $ref: '#/components/schemas/Employee'
+        - type: object
+          properties:
+            skills:
+              type: array
+              items:
+                type: string
+              example: ["Kong", "Python", "Mistral AI"]
+            biography:
+              type: string
+              description: Parcours détaillé utilisé pour l'analyse sémantique.
+              example: "Experte en architectures micro-services avec 10 ans d'expérience."
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: "EMPLOYEE_NOT_FOUND"
+            message:
+              type: string
+              example: "L'employé spécifié n'existe pas dans l'annuaire."
+            at:
+              type: string
+              format: date-time
+              example: "2026-04-15T12:00:00Z"
+
+  responses:
+    NotFoundError:
+      description: L'employé n'existe pas.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

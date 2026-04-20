@@ -1,0 +1,163 @@
+openapi: 3.0.0
+info:
+  title: Logistics & Support API
+  description: >-
+    Ce service gère le suivi des expéditions, la maintenance du support client (SAV) 
+    et la surveillance des niveaux de stock critiques pour assurer la continuité opérationnelle.
+  version: 1.0.0
+  x-api-version: "1.0.0"
+
+servers:
+  - url: http://localhost:8000/v1
+    description: Passerelle API Kong (Environnement de développement)
+
+paths:
+  /shipments/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Identifiant de la commande associée à l'expédition (Format CMD-YYYY-XXX).
+        schema:
+          type: string
+          pattern: '^CMD-[0-9]{4}-[0-9]{3}$'
+          example: "CMD-2026-001"
+    get:
+      summary: Tracking en temps réel de la livraison
+      description: Récupère les étapes logistiques et le statut actuel du colis.
+      operationId: getShipmentStatus
+      tags:
+        - Logistics
+      responses:
+        '200':
+          description: Informations de suivi récupérées.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipment'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
+
+  /support/ticket:
+    post:
+      summary: Ouverture d'un incident SAV
+      description: Permet de créer un ticket de support suite à un problème sur une commande ou un produit.
+      operationId: createSupportTicket
+      tags:
+        - Support
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - customer_id
+                - order_id
+                - issue_type
+                - description
+              properties:
+                customer_id:
+                  type: string
+                  example: "CUST-001"
+                order_id:
+                  type: string
+                  example: "CMD-2026-001"
+                issue_type:
+                  type: string
+                  enum: [technical_issue, shipping_delay, damaged_product, billing_error]
+                  example: "technical_issue"
+                description:
+                  type: string
+                  example: "Le TitanBook Pro ne s'allume pas après déballage."
+      responses:
+        '201':
+          description: Ticket SAV créé avec succès.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ticket_id:
+                    type: string
+                    example: "TICK-8829-X"
+                  status:
+                    type: string
+                    example: "open"
+
+  /stock/status:
+    get:
+      summary: État d'alerte sur les stocks critiques
+      description: Liste les produits dont la quantité en entrepôt est inférieure au seuil de sécurité.
+      operationId: getLowStockAlerts
+      tags:
+        - Logistics
+      responses:
+        '200':
+          description: Liste des alertes de stock.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  alerts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        product_id:
+                          type: string
+                          example: "PROD-101"
+                        current_stock:
+                          type: integer
+                          example: 2
+                        status:
+                          type: string
+                          example: "critical"
+
+components:
+  schemas:
+    Shipment:
+      type: object
+      properties:
+        order_id:
+          type: string
+        carrier:
+          type: string
+          example: "GlobalExpress"
+        tracking_number:
+          type: string
+          example: "GE-992837445-FR"
+        current_step:
+          type: string
+          enum: [preparing, in_transit, out_for_delivery, delivered]
+          example: "in_transit"
+        estimated_delivery:
+          type: string
+          format: date
+          example: "2026-04-18"
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: "SHIPMENT_NOT_FOUND"
+            message:
+              type: string
+              example: "Aucune expédition trouvée pour cette référence."
+            at:
+              type: string
+              format: date-time
+              example: "2026-04-15T12:00:00Z"
+
+  responses:
+    NotFoundError:
+      description: Ressource logistique introuvable.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
