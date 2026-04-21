@@ -1,7 +1,7 @@
 {
   "id": "notification-api",
   "name": "Notification API",
-  "version": "v1",
+  "version": "v2",
   "description": "Gestion et envoi de notifications multicanal (email, SMS, push) pour les utilisateurs de la plateforme. Permet de créer, planifier et suivre les notifications en temps réel.",
   "team": "Platform",
   "base_url": "/v1/notifications",
