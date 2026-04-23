@@ -1,0 +1,6 @@
+ragas==0.1.21
+datasets
+requests
+openai
+langchain
+langchain-community
