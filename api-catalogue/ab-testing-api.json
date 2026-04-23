@@ -319,7 +319,7 @@
         "type": "apiKey",
         "in": "header",
         "name": "X-API-Key",
-        "description": "Clé API Kong GatewayV "
+        "description": "Clé API Kong Gateway "
       }
     }
   }
