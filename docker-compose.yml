@@ -4,7 +4,7 @@ networks:
 
 volumes:
   kong_data:
-  n8n_data:
+  # n8n_data:
 
 services:
 
@@ -96,23 +96,23 @@ services:
     networks:
       - ai-network
 
-  n8n:
-    image: n8nio/n8n:latest
-    container_name: n8n
-    environment:
-      N8N_BASIC_AUTH_ACTIVE: "true"
-      N8N_BASIC_AUTH_USER: ${N8N_BASIC_AUTH_USER}
-      N8N_BASIC_AUTH_PASSWORD: ${N8N_BASIC_AUTH_PASSWORD}
-      N8N_HOST: localhost
-      N8N_PORT: 5678
-      N8N_PROTOCOL: http
-      WEBHOOK_URL: http://localhost:5678/
-    ports:
-      - "5678:5678"
-    volumes:
-      - n8n_data:/home/node/.n8n
-    networks:
-      - ai-network
-    depends_on:
-      - kong
-      - mcp-server
+  # n8n:
+  #   image: n8nio/n8n:latest
+  #   container_name: n8n
+  #   environment:
+  #     N8N_BASIC_AUTH_ACTIVE: "true"
+  #     N8N_BASIC_AUTH_USER: ${N8N_BASIC_AUTH_USER}
+  #     N8N_BASIC_AUTH_PASSWORD: ${N8N_BASIC_AUTH_PASSWORD}
+  #     N8N_HOST: localhost
+  #     N8N_PORT: 5678
+  #     N8N_PROTOCOL: http
+  #     WEBHOOK_URL: http://localhost:5678/
+  #   ports:
+  #     - "5678:5678"
+  #   volumes:
+  #     - n8n_data:/home/node/.n8n
+  #   networks:
+  #     - ai-network
+  #   depends_on:
+  #     - kong
+  #     - mcp-server

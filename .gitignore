@@ -2,3 +2,4 @@
 node_modules/
 kong_data/
 n8n_data/
+*.zip
