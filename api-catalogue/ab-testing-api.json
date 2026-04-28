@@ -19,7 +19,7 @@
   "paths": {
     "/v1/experiments": {
       "post": {
-        "summary": "Créer une expérience A/B.",
+        "summary": "Créer une expérience A/B",
         "operationId": "createExperiment",
         "tags": [
           "Experiments"
