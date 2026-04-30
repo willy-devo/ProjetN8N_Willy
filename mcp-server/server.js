@@ -24,6 +24,7 @@ app.post("/tools/search_apis", async (req, res) => {
 
     if (!query) return res.status(400).json({ error: "query is required" });
 
+    // ── ÉTAPE 1 : Embedding de la query ──────────────
     const embedRes = await fetch("https://api.mistral.ai/v1/embeddings", {
       method: "POST",
       headers: {

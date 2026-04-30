@@ -97,6 +97,34 @@ services:
     networks:
       - ai-network
 
+  
+  chat:
+    build:
+      context: ./LangGraph
+      dockerfile: Dockerfile
+    container_name: chat
+    env_file: .env
+    environment:
+      # IMPORTANT : dans le réseau Docker, on appelle Kong par
+      # son nom de service, PAS par localhost
+      KONG_URL: http://kong:8000
+      KONG_API_KEY: ${KONG_API_KEY:-n8n-internal-key-2025}
+      MISTRAL_API_KEY: ${MISTRAL_API_KEY}
+    ports:
+      - "8080:8080"
+    networks:
+      - ai-network
+    depends_on:
+      kong:
+        condition: service_healthy
+      mcp-server:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:8080/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
   # n8n:
   #   image: n8nio/n8n:latest
   #   container_name: n8n
@@ -117,3 +145,4 @@ services:
   #   depends_on:
   #     - kong
   #     - mcp-server
+
