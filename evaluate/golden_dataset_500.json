@@ -1,0 +1,1089 @@
+{
+  "name": "Agentic4API Golden Dataset",
+  "version": "1.0.0",
+  "description": "Golden Dataset for evaluating semantic search performance over a catalog of 518 OpenAPI specs. Compatible with the Agentic4API Colab notebook (Gemini Pinecone / ColBERT / Sans RAG evaluation).",
+  "total_questions": 100,
+  "categories_distribution": {
+    "simple": 15,
+    "faux_positif": 20,
+    "versioning": 11,
+    "breaking_change": 4,
+    "multi_api": 15,
+    "endpoint_precise": 10,
+    "negative": 10,
+    "use_case": 10,
+    "auth": 5
+  },
+  "difficulty_distribution": {
+    "easy": 21,
+    "medium": 57,
+    "hard": 22
+  },
+  "questions": [
+    {
+      "id": "Q001",
+      "question": "Quelle API utiliser pour créer une nouvelle commande e-commerce ?",
+      "expected_apis": [
+        "order-api-v4"
+      ],
+      "difficulty": "easy",
+      "category": "simple",
+      "expected_answer": "Order API v4 — POST /v4/orders (version actuelle recommandée)"
+    },
+    {
+      "id": "Q002",
+      "question": "Comment récupérer le profil d'un utilisateur connecté ?",
+      "expected_apis": [
+        "user-api-v3"
+      ],
+      "difficulty": "easy",
+      "category": "simple",
+      "expected_answer": "User API v3 — GET /v3/users/{id} (version actuelle avec SCIM 2.0)"
+    },
+    {
+      "id": "Q003",
+      "question": "Quelle API permet de rechercher des produits par mot-clé ?",
+      "expected_apis": [
+        "search-api-v3"
+      ],
+      "difficulty": "easy",
+      "category": "simple",
+      "expected_answer": "Search API v3 — GET /v3/search (recherche hybride + LLM conversationnelle)"
+    },
+    {
+      "id": "Q004",
+      "question": "Je veux vérifier le stock disponible pour un produit.",
+      "expected_apis": [
+        "inventory-api"
+      ],
+      "difficulty": "easy",
+      "category": "simple",
+      "expected_answer": "Inventory API v3 — GET /v3/inventory (version actuelle)"
+    },
+    {
+      "id": "Q005",
+      "question": "Comment obtenir le prix actuel d'un produit ?",
+      "expected_apis": [
+        "pricing-api"
+      ],
+      "difficulty": "easy",
+      "category": "simple",
+      "expected_answer": "Pricing API — GET /v1/pricing/product/{productId}"
+    },
+    {
+      "id": "Q006",
+      "question": "Comment ajouter un article au panier d'un utilisateur ?",
+      "expected_apis": [
+        "cart-api"
+      ],
+      "difficulty": "easy",
+      "category": "simple",
+      "expected_answer": "Cart API — POST /v1/cart/{userId}/items"
+    },
+    {
+      "id": "Q007",
+      "question": "Quelle API envoie une notification push à un utilisateur ?",
+      "expected_apis": [
+        "notification-api-v3"
+      ],
+      "difficulty": "easy",
+      "category": "simple",
+      "expected_answer": "Notification API v3 — POST /v3/notifications/send avec channel=push"
+    },
+    {
+      "id": "Q008",
+      "question": "Comment suivre la livraison d'un colis en temps réel ?",
+      "expected_apis": [
+        "shipping-api-v2"
+      ],
+      "difficulty": "easy",
+      "category": "simple",
+      "expected_answer": "Shipping API v2 — GET /v2/shipping/{id}/live-track (tracking GPS SSE)"
+    },
+    {
+      "id": "Q009",
+      "question": "Quelle API permet de laisser un avis textuel sur un produit ?",
+      "expected_apis": [
+        "review-api"
+      ],
+      "difficulty": "easy",
+      "category": "simple",
+      "expected_answer": "Review API — POST /v1/reviews"
+    },
+    {
+      "id": "Q010",
+      "question": "Comment générer une facture après une commande payée ?",
+      "expected_apis": [
+        "invoice-api-v3"
+      ],
+      "difficulty": "easy",
+      "category": "simple",
+      "expected_answer": "Invoice API v3 — POST /v3/invoices"
+    },
+    {
+      "id": "Q011",
+      "question": "Quelle API permet de créer un bon de commande fournisseur ?",
+      "expected_apis": [
+        "purchase-order-api"
+      ],
+      "difficulty": "easy",
+      "category": "simple",
+      "expected_answer": "Purchase Order API — POST /v1/purchase-orders"
+    },
+    {
+      "id": "Q012",
+      "question": "Comment créer une tâche dans un sprint ?",
+      "expected_apis": [
+        "task-api"
+      ],
+      "difficulty": "easy",
+      "category": "simple",
+      "expected_answer": "Task API — POST /v1/tasks"
+    },
+    {
+      "id": "Q013",
+      "question": "Quelle API gère les demandes de congés des employés ?",
+      "expected_apis": [
+        "leave-api"
+      ],
+      "difficulty": "easy",
+      "category": "simple",
+      "expected_answer": "Leave API — POST /v1/leaves/request"
+    },
+    {
+      "id": "Q014",
+      "question": "Comment calculer la TVA d'une transaction ?",
+      "expected_apis": [
+        "tax-api"
+      ],
+      "difficulty": "easy",
+      "category": "simple",
+      "expected_answer": "Tax API — POST /v1/tax/calculate"
+    },
+    {
+      "id": "Q015",
+      "question": "Quelle API gère le carnet de vaccination électronique d'un patient ?",
+      "expected_apis": [
+        "vaccination-api"
+      ],
+      "difficulty": "easy",
+      "category": "simple",
+      "expected_answer": "Vaccination API — GET /v1/vaccinations/{patientId}"
+    },
+    {
+      "id": "Q016",
+      "question": "Quelle est la différence entre la User API et la Customer Profile API ?",
+      "expected_apis": [
+        "user-api-v3",
+        "customer-profile-api-v2"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "User API = identité technique (login, mdp, 2FA, SSO). Customer Profile API = données commerciales (segment, fidélité, achats)."
+    },
+    {
+      "id": "Q017",
+      "question": "Je veux gérer le profil commercial et marketing d'un acheteur, pas ses credentials.",
+      "expected_apis": [
+        "customer-profile-api-v2"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "Customer Profile API — pas User API. User API gère login/mdp."
+    },
+    {
+      "id": "Q018",
+      "question": "Quelle est la différence entre la Notification API et la Messaging API ?",
+      "expected_apis": [
+        "notification-api-v3",
+        "messaging-api"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "Notification = unidirectionnel (système→user). Messaging = bidirectionnel (user↔user)."
+    },
+    {
+      "id": "Q019",
+      "question": "Je veux que deux utilisateurs puissent s'envoyer des messages entre eux dans l'app.",
+      "expected_apis": [
+        "messaging-api"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "Messaging API — chat bidirectionnel user↔user. Pas Notification API."
+    },
+    {
+      "id": "Q020",
+      "question": "Quelle différence entre Payment API et Billing API ?",
+      "expected_apis": [
+        "payment-api-v3",
+        "billing-api-v3"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "Payment = transaction ponctuelle (carte/PayPal/SEPA). Billing = cycles récurrents (abonnements)."
+    },
+    {
+      "id": "Q021",
+      "question": "Je veux mettre en place un abonnement mensuel avec prélèvement automatique.",
+      "expected_apis": [
+        "billing-api-v3"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "Billing API v3 — pas Payment API. Payment gère les transactions ponctuelles."
+    },
+    {
+      "id": "Q022",
+      "question": "Quelle est la différence entre Invoice API et Billing API ?",
+      "expected_apis": [
+        "invoice-api-v3",
+        "billing-api-v3"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "Invoice = document fiscal PDF. Billing = orchestration des prélèvements et abonnements."
+    },
+    {
+      "id": "Q023",
+      "question": "Je veux générer un PDF de facture conforme eIDAS à envoyer au client B2B.",
+      "expected_apis": [
+        "invoice-api-v3"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "Invoice API v3 — GET /v3/invoices/{id}/pdf (PDF multilingue, signé eIDAS si B2B > 10k€)."
+    },
+    {
+      "id": "Q024",
+      "question": "Quelle différence entre Alert API et Notification API ?",
+      "expected_apis": [
+        "alert-api",
+        "notification-api-v3"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "Alert = équipes OPS internes (PagerDuty, Slack). Notification = clients finaux."
+    },
+    {
+      "id": "Q025",
+      "question": "Je veux alerter mon équipe technique d'astreinte quand un service tombe.",
+      "expected_apis": [
+        "alert-api"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "Alert API — pas Notification API. Alert cible les équipes ops."
+    },
+    {
+      "id": "Q026",
+      "question": "Quelle différence entre Task API et Ticket API ?",
+      "expected_apis": [
+        "task-api",
+        "ticket-api"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "Task = tâche interne planifiée (projet, sprint). Ticket = demande support client entrante."
+    },
+    {
+      "id": "Q027",
+      "question": "Un client a un problème, je veux créer une demande de support.",
+      "expected_apis": [
+        "ticket-api"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "Ticket API — pas Task API. Ticket gère les demandes support clients."
+    },
+    {
+      "id": "Q028",
+      "question": "Quelle différence entre Media API et Media Processing API ?",
+      "expected_apis": [
+        "media-api",
+        "media-processing-api"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "Media API = stockage + CDN + resize simple. Media Processing = transcodage vidéo, OCR, watermark, détection IA NSFW."
+    },
+    {
+      "id": "Q029",
+      "question": "Je veux extraire automatiquement le texte d'un PDF scanné.",
+      "expected_apis": [
+        "media-processing-api"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "Media Processing API — POST /v1/media-processing/ocr. Pas File Storage ni Media API."
+    },
+    {
+      "id": "Q030",
+      "question": "Quelle différence entre Catalog API et Product Catalog API ?",
+      "expected_apis": [
+        "catalog-api",
+        "product-catalog-api-v3"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "Catalog API = collections publiées par canal (ex: B2B Allemagne). Product Catalog = fiches produits omnicanal (variantes, médias, SEO)."
+    },
+    {
+      "id": "Q031",
+      "question": "Quelle différence entre Report API et Reporting API ?",
+      "expected_apis": [
+        "report-api",
+        "reporting-api-v2"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "Report API = rapport contextuel instantané sur une ressource. Reporting API = rapports planifiés périodiques sur des populations."
+    },
+    {
+      "id": "Q032",
+      "question": "Je veux un rapport PDF mensuel des ventes envoyé par email automatiquement.",
+      "expected_apis": [
+        "reporting-api-v2"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "Reporting API v2 — pas Report API. Reporting gère les rapports planifiés récurrents."
+    },
+    {
+      "id": "Q033",
+      "question": "Quelle différence entre Event API (event bus) et Event Tracking API ?",
+      "expected_apis": [
+        "event-api",
+        "event-tracking-api"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "Event API = bus d'événements système entre microservices (ordre.créé). Event Tracking = comportements utilisateurs pour analytics (clic, page vue)."
+    },
+    {
+      "id": "Q034",
+      "question": "Je veux tracer les clics et pages vues des utilisateurs sur mon site.",
+      "expected_apis": [
+        "event-tracking-api"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "Event Tracking API — POST /v1/events/track. Pas Event API (bus interservices)."
+    },
+    {
+      "id": "Q035",
+      "question": "Quelle différence entre Inventory API et Warehouse API ?",
+      "expected_apis": [
+        "inventory-api",
+        "warehouse-api"
+      ],
+      "difficulty": "medium",
+      "category": "faux_positif",
+      "expected_answer": "Inventory = combien (quantités, alertes seuil). Warehouse = où (entrepôts, allées, transferts inter-entrepôts)."
+    },
+    {
+      "id": "Q036",
+      "question": "Quelle est la version actuelle recommandée de l'API de commandes ?",
+      "expected_apis": [
+        "order-api-v4"
+      ],
+      "difficulty": "easy",
+      "category": "versioning",
+      "expected_answer": "Order API v4 est la version actuelle et recommandée."
+    },
+    {
+      "id": "Q037",
+      "question": "J'utilise order-api-v2, vers quelle version dois-je migrer ?",
+      "expected_apis": [
+        "order-api-v4"
+      ],
+      "difficulty": "medium",
+      "category": "versioning",
+      "expected_answer": "Migrer vers order-api-v4 (v2 deprecated juin 2022, v3 deprecated sept. 2023)."
+    },
+    {
+      "id": "Q038",
+      "question": "Quelles versions de l'API paiement coexistent et lesquelles sont dépréciées ?",
+      "expected_apis": [
+        "payment-api",
+        "payment-api-v1",
+        "payment-api-v2",
+        "payment-api-v3"
+      ],
+      "difficulty": "hard",
+      "category": "versioning",
+      "expected_answer": "v1 deprecated, v2 deprecated, v3 est la version actuelle (BNPL, crypto, réconciliation)."
+    },
+    {
+      "id": "Q039",
+      "question": "Quelle version de l'User API supporte SCIM 2.0 et les groupes natifs ?",
+      "expected_apis": [
+        "user-api-v3"
+      ],
+      "difficulty": "medium",
+      "category": "versioning",
+      "expected_answer": "User API v3 — introduit SCIM 2.0, groupes natifs et provisioning IdP SSO."
+    },
+    {
+      "id": "Q040",
+      "question": "Quelle version de la Notification API supporte WhatsApp et les triggers événementiels ?",
+      "expected_apis": [
+        "notification-api-v3"
+      ],
+      "difficulty": "medium",
+      "category": "versioning",
+      "expected_answer": "Notification API v3 — ajout canaux WhatsApp et in-app, triggers événementiels."
+    },
+    {
+      "id": "Q041",
+      "question": "Quelle version de la Search API intègre la recherche conversationnelle LLM ?",
+      "expected_apis": [
+        "search-api-v3"
+      ],
+      "difficulty": "medium",
+      "category": "versioning",
+      "expected_answer": "Search API v3 — mode conversational (LLM) et synonymes configurables."
+    },
+    {
+      "id": "Q042",
+      "question": "Quelle version du Product API gère les catalogues multi-canal B2B/B2C ?",
+      "expected_apis": [
+        "product-api-v4"
+      ],
+      "difficulty": "medium",
+      "category": "versioning",
+      "expected_answer": "Product API v4 — multi-catalogue natif, bundles natifs et IA de description."
+    },
+    {
+      "id": "Q043",
+      "question": "Quelle version de la Billing API supporte la facturation à l'usage (metered) ?",
+      "expected_apis": [
+        "billing-api-v3"
+      ],
+      "difficulty": "medium",
+      "category": "versioning",
+      "expected_answer": "Billing API v3 — billing_mode flat | metered | hybrid et sync ERP natif."
+    },
+    {
+      "id": "Q044",
+      "question": "Quelle version de l'Auth API utilise du JWT stateless plutôt que des sessions serveur ?",
+      "expected_apis": [
+        "auth-api"
+      ],
+      "difficulty": "medium",
+      "category": "versioning",
+      "expected_answer": "Auth API v2 (auth-api) — JWT, OAuth2, refresh tokens. v1 (auth-api-v1) deprecated 2022 utilisait des sessions cookies."
+    },
+    {
+      "id": "Q045",
+      "question": "Quelle version de la Fleet API est la plus récente pour gérer une flotte de véhicules ?",
+      "expected_apis": [
+        "fleet-api-v4"
+      ],
+      "difficulty": "easy",
+      "category": "versioning",
+      "expected_answer": "Fleet API v4 — version actuelle, GPS temps réel, maintenance et conducteurs."
+    },
+    {
+      "id": "Q046",
+      "question": "Quelle version du Hotel API gère les tarifs dynamiques et les services additionnels ?",
+      "expected_apis": [
+        "hotel-api-v3"
+      ],
+      "difficulty": "medium",
+      "category": "versioning",
+      "expected_answer": "Hotel API v3 — chambres, tarifs dynamiques, services et avis."
+    },
+    {
+      "id": "Q047",
+      "question": "Quels sont les breaking changes entre Order API v3 et v4 ?",
+      "expected_apis": [
+        "order-api-v3",
+        "order-api-v4"
+      ],
+      "difficulty": "hard",
+      "category": "breaking_change",
+      "expected_answer": "v4 : items→order_lines, total_price→amount_due, currency obligatoire, webhooks automatiques, /ship supprimé→PATCH /status."
+    },
+    {
+      "id": "Q048",
+      "question": "Quelle est la différence entre payment-api-v2 et payment-api-v3 ?",
+      "expected_apis": [
+        "payment-api-v2",
+        "payment-api-v3"
+      ],
+      "difficulty": "hard",
+      "category": "breaking_change",
+      "expected_answer": "v3 ajoute BNPL (Klarna/Alma), crypto (BTC/ETH), dispute management et réconciliation bancaire automatique."
+    },
+    {
+      "id": "Q049",
+      "question": "Qu'est-ce qui change entre Invoice API v2 et v3 ?",
+      "expected_apis": [
+        "invoice-api-v2",
+        "invoice-api-v3"
+      ],
+      "difficulty": "hard",
+      "category": "breaking_change",
+      "expected_answer": "v3 : facturation récurrente native, pénalités de retard automatiques, exports comptables FEC/DATEV/SAGE/CEGID."
+    },
+    {
+      "id": "Q050",
+      "question": "Quelle est la différence concrète entre Shipping API v1 et v2 ?",
+      "expected_apis": [
+        "shipping-api",
+        "shipping-api-v2"
+      ],
+      "difficulty": "medium",
+      "category": "breaking_change",
+      "expected_answer": "v2 : multi-colis, tracking GPS temps réel via WebSocket SSE, calcul CO2 et gestion douanes export international."
+    },
+    {
+      "id": "Q051",
+      "question": "Quelles APIs sont mobilisées pour finaliser un panier en commande payée ?",
+      "expected_apis": [
+        "cart-api",
+        "checkout-api",
+        "payment-api-v3",
+        "order-api-v4"
+      ],
+      "difficulty": "medium",
+      "category": "multi_api",
+      "expected_answer": "Cart API (panier) → Checkout API (orchestration) → Payment API v3 (paiement) → Order API v4 (commande)."
+    },
+    {
+      "id": "Q052",
+      "question": "Quelles APIs interviennent quand un client passe une commande puis se fait livrer ?",
+      "expected_apis": [
+        "order-api-v4",
+        "stock-reservation-api",
+        "invoice-api-v3",
+        "shipping-api-v2"
+      ],
+      "difficulty": "medium",
+      "category": "multi_api",
+      "expected_answer": "Order API v4 (commande) → Stock Reservation (réservation) → Invoice API v3 (facture) → Shipping API v2 (expédition)."
+    },
+    {
+      "id": "Q053",
+      "question": "Comment authentifier un utilisateur avec MFA et fédération SSO d'entreprise ?",
+      "expected_apis": [
+        "auth-api",
+        "sso-api",
+        "mfa-api",
+        "session-api"
+      ],
+      "difficulty": "hard",
+      "category": "multi_api",
+      "expected_answer": "Auth API (login JWT) + SSO API (fédération SAML/OIDC) + MFA API (TOTP/FIDO2) + Session API (gestion sessions)."
+    },
+    {
+      "id": "Q054",
+      "question": "Quelles APIs permettent un onboarding complet d'un nouvel employé (compte + accès + matériel) ?",
+      "expected_apis": [
+        "onboarding-api",
+        "employee-api",
+        "user-api-v3",
+        "permission-api"
+      ],
+      "difficulty": "hard",
+      "category": "multi_api",
+      "expected_answer": "Onboarding API (parcours) + Employee API (dossier RH) + User API v3 (compte) + Permission API (rôles RBAC)."
+    },
+    {
+      "id": "Q055",
+      "question": "Quelles APIs sont nécessaires pour une admission patient à l'hôpital ?",
+      "expected_apis": [
+        "patient-api-v3",
+        "patient-admission-api",
+        "hospital-bed-api",
+        "insurance-eligibility-api"
+      ],
+      "difficulty": "hard",
+      "category": "multi_api",
+      "expected_answer": "Patient API v3 (dossier FHIR) + Patient Admission (check-in) + Hospital Bed (lit) + Insurance Eligibility (droits)."
+    },
+    {
+      "id": "Q056",
+      "question": "Quelles APIs orchestrent une déclaration de sinistre auto avec expertise ?",
+      "expected_apis": [
+        "insurance-claim-api-v3",
+        "damage-assessment-api",
+        "fraud-claims-api",
+        "claims-settlement-api"
+      ],
+      "difficulty": "hard",
+      "category": "multi_api",
+      "expected_answer": "Insurance Claim v3 (déclaration) + Damage Assessment (expertise) + Fraud Claims (anti-fraude) + Claims Settlement (indemnisation)."
+    },
+    {
+      "id": "Q057",
+      "question": "Quelles APIs entrent en jeu pour un transfert SEPA international avec contrôle conformité ?",
+      "expected_apis": [
+        "transfer-api-v2",
+        "iban-validation-api",
+        "sanctions-screening-api",
+        "aml-api"
+      ],
+      "difficulty": "hard",
+      "category": "multi_api",
+      "expected_answer": "Transfer API v2 (virement) + IBAN Validation (BIC/IBAN) + Sanctions Screening (OFAC/UE) + AML API (monitoring blanchiment)."
+    },
+    {
+      "id": "Q058",
+      "question": "Quelles APIs permettent de réserver un voyage complet (vol + hôtel + voiture + assurance) ?",
+      "expected_apis": [
+        "flight-booking-api",
+        "hotel-api-v3",
+        "car-rental-api",
+        "travel-insurance-api"
+      ],
+      "difficulty": "medium",
+      "category": "multi_api",
+      "expected_answer": "Flight Booking + Hotel API v3 + Car Rental + Travel Insurance — orchestrer via un workflow."
+    },
+    {
+      "id": "Q059",
+      "question": "Quelles APIs orchestrent une campagne marketing ciblée avec attribution ?",
+      "expected_apis": [
+        "campaign-api",
+        "segmentation-api",
+        "notification-api-v3",
+        "attribution-api"
+      ],
+      "difficulty": "medium",
+      "category": "multi_api",
+      "expected_answer": "Campaign API (campagne) + Segmentation API (cible) + Notification API v3 (envoi multicanal) + Attribution API (mesure)."
+    },
+    {
+      "id": "Q060",
+      "question": "Quelles APIs permettent l'irrigation intelligente d'une parcelle agricole selon la météo ?",
+      "expected_apis": [
+        "irrigation-api-v2",
+        "weather-forecast-agri-api",
+        "soil-analysis-api",
+        "field-api-v2"
+      ],
+      "difficulty": "hard",
+      "category": "multi_api",
+      "expected_answer": "Irrigation API v2 (programmation) + Weather Forecast Agri (prévisions) + Soil Analysis (humidité sol) + Field API v2 (parcelle)."
+    },
+    {
+      "id": "Q061",
+      "question": "Quelles APIs permettent à un opérateur de gérer un nouvel abonné mobile (SIM + ligne + plan) ?",
+      "expected_apis": [
+        "subscriber-api-v3",
+        "provisioning-api",
+        "esim-api",
+        "plan-api-v2"
+      ],
+      "difficulty": "hard",
+      "category": "multi_api",
+      "expected_answer": "Subscriber API v3 (abonné) + Provisioning API (activation) + eSIM API (profil) + Plan API v2 (forfait)."
+    },
+    {
+      "id": "Q062",
+      "question": "Quelles APIs orchestrent un ordre de fabrication industriel complet (planif + matières + atelier) ?",
+      "expected_apis": [
+        "production-order-api-v3",
+        "mrp-api",
+        "bom-api",
+        "mes-api"
+      ],
+      "difficulty": "hard",
+      "category": "multi_api",
+      "expected_answer": "Production Order v3 (OF) + MRP (besoins) + BOM (nomenclature) + MES (exécution atelier)."
+    },
+    {
+      "id": "Q063",
+      "question": "Quelles APIs interviennent dans une transaction immobilière jusqu'à la signature notariée ?",
+      "expected_apis": [
+        "real-estate-search-api",
+        "real-estate-valuation-api",
+        "mortgage-api-v2",
+        "notary-api",
+        "escrow-real-estate-api"
+      ],
+      "difficulty": "hard",
+      "category": "multi_api",
+      "expected_answer": "Real Estate Search (recherche bien) + Real Estate Valuation (estimation) + Mortgage v2 (prêt) + Escrow Real Estate (séquestre) + Notary (acte)."
+    },
+    {
+      "id": "Q064",
+      "question": "Quelles APIs servent à détecter et traiter un incident de cybersécurité ?",
+      "expected_apis": [
+        "siem-api",
+        "threat-intelligence-api",
+        "security-incident-api-v2",
+        "forensics-api"
+      ],
+      "difficulty": "hard",
+      "category": "multi_api",
+      "expected_answer": "SIEM (détection corrélée) + Threat Intelligence (IoC) + Security Incident v2 (gestion) + Forensics (investigation)."
+    },
+    {
+      "id": "Q065",
+      "question": "Quelles APIs orchestrent un pipeline ML de la donnée brute jusqu'au serving ?",
+      "expected_apis": [
+        "data-lake-api",
+        "etl-api",
+        "feature-store-api",
+        "model-registry-api",
+        "inference-api"
+      ],
+      "difficulty": "hard",
+      "category": "multi_api",
+      "expected_answer": "Data Lake (données brutes) → ETL (transformation) → Feature Store (features) → Model Registry (versions) → Inference (serving prédictions)."
+    },
+    {
+      "id": "Q066",
+      "question": "Quel endpoint utiliser pour activer le 2FA d'un utilisateur ?",
+      "expected_apis": [
+        "user-api"
+      ],
+      "difficulty": "medium",
+      "category": "endpoint_precise",
+      "expected_answer": "User API v2 — POST /v2/users/{id}/2fa"
+    },
+    {
+      "id": "Q067",
+      "question": "Quel endpoint pour purger une URL du CDN après mise à jour ?",
+      "expected_apis": [
+        "cdn-api"
+      ],
+      "difficulty": "medium",
+      "category": "endpoint_precise",
+      "expected_answer": "CDN API — POST /v1/cdn/purge"
+    },
+    {
+      "id": "Q068",
+      "question": "Quel endpoint pour rejouer des événements passés après un incident ?",
+      "expected_apis": [
+        "event-api"
+      ],
+      "difficulty": "medium",
+      "category": "endpoint_precise",
+      "expected_answer": "Event API — POST /v1/events/replay"
+    },
+    {
+      "id": "Q069",
+      "question": "Quel endpoint pour générer un export comptable FEC d'une facture ?",
+      "expected_apis": [
+        "invoice-api-v3"
+      ],
+      "difficulty": "medium",
+      "category": "endpoint_precise",
+      "expected_answer": "Invoice API v3 — GET /v3/invoices/{id}/accounting-export (FEC / DATEV / SAGE / CEGID)."
+    },
+    {
+      "id": "Q070",
+      "question": "Quel endpoint pour réserver temporairement du stock pendant le checkout ?",
+      "expected_apis": [
+        "stock-reservation-api"
+      ],
+      "difficulty": "medium",
+      "category": "endpoint_precise",
+      "expected_answer": "Stock Reservation API — POST /v1/stock/reserve (TTL 15 min)."
+    },
+    {
+      "id": "Q071",
+      "question": "Quel endpoint envoie un OTP par SMS ?",
+      "expected_apis": [
+        "sms-api"
+      ],
+      "difficulty": "medium",
+      "category": "endpoint_precise",
+      "expected_answer": "SMS API — POST /v1/sms/otp/send (puis POST /v1/sms/otp/verify pour vérifier)."
+    },
+    {
+      "id": "Q072",
+      "question": "Quel endpoint pour révoquer toutes les sessions actives d'un utilisateur (déconnexion totale) ?",
+      "expected_apis": [
+        "session-api"
+      ],
+      "difficulty": "medium",
+      "category": "endpoint_precise",
+      "expected_answer": "Session API — DELETE /v1/sessions/{userId}/revoke-all"
+    },
+    {
+      "id": "Q073",
+      "question": "Quel endpoint pour ajuster le pourcentage de rollout d'un feature flag ?",
+      "expected_apis": [
+        "feature-flag-api"
+      ],
+      "difficulty": "medium",
+      "category": "endpoint_precise",
+      "expected_answer": "Feature Flag API — PUT /v1/flags/{key}/rollout"
+    },
+    {
+      "id": "Q074",
+      "question": "Quel endpoint pour créer un compte séquestre marketplace e-commerce ?",
+      "expected_apis": [
+        "escrow-api"
+      ],
+      "difficulty": "medium",
+      "category": "endpoint_precise",
+      "expected_answer": "Escrow API — POST /v1/escrow puis POST /v1/escrow/{id}/release pour libérer les fonds."
+    },
+    {
+      "id": "Q075",
+      "question": "Quel endpoint pour vérifier les interactions médicamenteuses avant prescription ?",
+      "expected_apis": [
+        "drug-interaction-api"
+      ],
+      "difficulty": "medium",
+      "category": "endpoint_precise",
+      "expected_answer": "Drug Interaction API — POST /v1/interactions/check"
+    },
+    {
+      "id": "Q076",
+      "question": "Quelle API permet de gérer la colonisation de Mars et la terraformation ?",
+      "expected_apis": [],
+      "difficulty": "medium",
+      "category": "negative",
+      "expected_answer": "Aucune API du catalogue ne couvre ce besoin."
+    },
+    {
+      "id": "Q077",
+      "question": "Quelle API gère le dressage de chevaux de course ?",
+      "expected_apis": [],
+      "difficulty": "medium",
+      "category": "negative",
+      "expected_answer": "Aucune API dédiée. Livestock API gère l'élevage générique mais pas le dressage sportif."
+    },
+    {
+      "id": "Q078",
+      "question": "Quelle API permet de prédire les numéros gagnants du loto ?",
+      "expected_apis": [],
+      "difficulty": "easy",
+      "category": "negative",
+      "expected_answer": "Aucune API du catalogue ne couvre ce besoin (et c'est physiquement impossible)."
+    },
+    {
+      "id": "Q079",
+      "question": "Quelle API permet d'imprimer des billets de banque physiques ?",
+      "expected_apis": [],
+      "difficulty": "easy",
+      "category": "negative",
+      "expected_answer": "Aucune API du catalogue. Activité régalienne réservée aux banques centrales."
+    },
+    {
+      "id": "Q080",
+      "question": "Quelle API gère le pilotage automatique d'avions de ligne ?",
+      "expected_apis": [],
+      "difficulty": "medium",
+      "category": "negative",
+      "expected_answer": "Aucune API du catalogue. Flight Booking gère seulement la réservation, pas le pilotage."
+    },
+    {
+      "id": "Q081",
+      "question": "Quelle API permet de traduire les pensées en langage naturel ?",
+      "expected_apis": [],
+      "difficulty": "easy",
+      "category": "negative",
+      "expected_answer": "Aucune API du catalogue (pas de BCI). Translation API ne traduit que du texte."
+    },
+    {
+      "id": "Q082",
+      "question": "Quelle API gère l'organisation de mariages clés-en-main ?",
+      "expected_apis": [],
+      "difficulty": "medium",
+      "category": "negative",
+      "expected_answer": "Aucune API dédiée. On peut bricoler avec Event Venue + Restaurant Reservation mais aucune API ne couvre l'organisation complète."
+    },
+    {
+      "id": "Q083",
+      "question": "Quelle API permet d'élever des poissons d'aquarium domestique ?",
+      "expected_apis": [],
+      "difficulty": "medium",
+      "category": "negative",
+      "expected_answer": "Aucune API du catalogue. Livestock cible l'élevage agricole, Veterinary les soins animaux d'élevage."
+    },
+    {
+      "id": "Q084",
+      "question": "Quelle API permet de gérer un cabinet de voyance et tirage de cartes ?",
+      "expected_apis": [],
+      "difficulty": "easy",
+      "category": "negative",
+      "expected_answer": "Aucune API du catalogue ne couvre ce besoin."
+    },
+    {
+      "id": "Q085",
+      "question": "Quelle API permet de cuisiner automatiquement en livrant les ingrédients chez moi ?",
+      "expected_apis": [],
+      "difficulty": "medium",
+      "category": "negative",
+      "expected_answer": "Aucune API du catalogue ne couvre ce besoin combiné cuisine + livraison ingrédients."
+    },
+    {
+      "id": "Q086",
+      "question": "Je gère un site e-commerce et veux mettre en place le programme de parrainage avec récompense en avoirs.",
+      "expected_apis": [
+        "referral-api",
+        "wallet-api",
+        "loyalty-points-api"
+      ],
+      "difficulty": "hard",
+      "category": "use_case",
+      "expected_answer": "Referral API (programme parrainage) + Wallet API (crédits) + Loyalty Points API (points fidélité)."
+    },
+    {
+      "id": "Q087",
+      "question": "Je veux respecter le RGPD : permettre aux utilisateurs de supprimer leurs données et exporter leur historique.",
+      "expected_apis": [
+        "gdpr-api",
+        "data-export-api",
+        "audit-log-api"
+      ],
+      "difficulty": "hard",
+      "category": "use_case",
+      "expected_answer": "GDPR API (POST /v1/gdpr/delete-request et /v1/gdpr/export-request) + Data Export API + Audit Log API pour la traçabilité."
+    },
+    {
+      "id": "Q088",
+      "question": "Je veux protéger mon API publique contre les attaques DDoS et limiter les requêtes par client.",
+      "expected_apis": [
+        "ddos-protection-api",
+        "rate-limit-api",
+        "api-gateway-api"
+      ],
+      "difficulty": "medium",
+      "category": "use_case",
+      "expected_answer": "DDoS Protection API (mitigation) + Rate Limit API (quotas) + API Gateway (routing). Combiner les 3."
+    },
+    {
+      "id": "Q089",
+      "question": "Je gère une copropriété et je veux organiser les AG, gérer les charges et planifier les travaux.",
+      "expected_apis": [
+        "homeowner-association-api"
+      ],
+      "difficulty": "medium",
+      "category": "use_case",
+      "expected_answer": "Homeowner Association API — gère AG, charges et travaux de copropriété."
+    },
+    {
+      "id": "Q090",
+      "question": "Je suis un opérateur d'énergie et veux récompenser les clients qui réduisent leur consommation aux heures de pointe.",
+      "expected_apis": [
+        "demand-response-api",
+        "smart-meter-api-v2",
+        "energy-consumption-api"
+      ],
+      "difficulty": "hard",
+      "category": "use_case",
+      "expected_answer": "Demand Response API (programmes effacement) + Smart Meter v2 (relevés temps réel) + Energy Consumption (suivi)."
+    },
+    {
+      "id": "Q091",
+      "question": "Je veux mettre en place un signalement éthique anonyme conforme à la loi Sapin II.",
+      "expected_apis": [
+        "whistleblowing-api"
+      ],
+      "difficulty": "medium",
+      "category": "use_case",
+      "expected_answer": "Whistleblowing API — POST /v1/whistleblowing/alerts (canal sécurisé, anonymat, conforme Sapin II)."
+    },
+    {
+      "id": "Q092",
+      "question": "Je suis une concession auto et veux gérer le constat amiable lors d'un accident pour mon client.",
+      "expected_apis": [
+        "auto-insurance-api",
+        "insurance-claim-api-v3",
+        "damage-assessment-api"
+      ],
+      "difficulty": "hard",
+      "category": "use_case",
+      "expected_answer": "Auto Insurance (constat amiable POST /v1/auto-insurance/accident-report) + Insurance Claim v3 (déclaration sinistre) + Damage Assessment (expertise IA)."
+    },
+    {
+      "id": "Q093",
+      "question": "Je suis une école et veux gérer inscriptions, cours, notes et communication avec les parents.",
+      "expected_apis": [
+        "enrollment-api-v2",
+        "course-api-v3",
+        "grade-api-v2",
+        "parent-portal-api"
+      ],
+      "difficulty": "hard",
+      "category": "use_case",
+      "expected_answer": "Enrollment v2 (inscriptions) + Course v3 (cours) + Grade v2 (notes) + Parent Portal (communication parents)."
+    },
+    {
+      "id": "Q094",
+      "question": "Je veux mettre en place une démarche prédictive de maintenance sur mes machines industrielles.",
+      "expected_apis": [
+        "predictive-maintenance-api",
+        "sensor-data-api-v2",
+        "machine-api-v2",
+        "maintenance-work-order-api"
+      ],
+      "difficulty": "hard",
+      "category": "use_case",
+      "expected_answer": "Predictive Maintenance (ML prédictions) + Sensor Data v2 (données capteurs) + Machine v2 (équipements) + Maintenance Work Order (OT)."
+    },
+    {
+      "id": "Q095",
+      "question": "Je suis exploitant agricole bio et veux prouver la traçabilité de mes produits du champ au consommateur.",
+      "expected_apis": [
+        "traceability-agri-api",
+        "crop-api-v2",
+        "harvest-api",
+        "food-safety-api"
+      ],
+      "difficulty": "hard",
+      "category": "use_case",
+      "expected_answer": "Traceability Agri (parcours ferme→consommateur, certifs bio) + Crop v2 (cultures) + Harvest (récoltes) + Food Safety (HACCP)."
+    },
+    {
+      "id": "Q096",
+      "question": "Quelle API utiliser pour fédérer les identités avec Azure AD via SAML 2.0 ?",
+      "expected_apis": [
+        "sso-api"
+      ],
+      "difficulty": "medium",
+      "category": "auth",
+      "expected_answer": "SSO API — fédération SAML 2.0 et OpenID Connect avec Azure AD, Okta, Google."
+    },
+    {
+      "id": "Q097",
+      "question": "Quelle API permet de gérer les facteurs MFA TOTP et clés FIDO2/WebAuthn ?",
+      "expected_apis": [
+        "mfa-api"
+      ],
+      "difficulty": "medium",
+      "category": "auth",
+      "expected_answer": "MFA API — POST /v1/mfa/enroll et /v1/mfa/verify (TOTP, SMS, FIDO2/WebAuthn)."
+    },
+    {
+      "id": "Q098",
+      "question": "Quelle est la différence entre Auth API et Permission API ?",
+      "expected_apis": [
+        "auth-api",
+        "permission-api"
+      ],
+      "difficulty": "medium",
+      "category": "auth",
+      "expected_answer": "Auth = authentification (qui es-tu ? JWT). Permission = autorisation RBAC (qu'as-tu le droit de faire ?)."
+    },
+    {
+      "id": "Q099",
+      "question": "Quelle API utiliser pour stocker en sécurité les credentials externes (API keys tierces, mots de passe DB) ?",
+      "expected_apis": [
+        "secret-api"
+      ],
+      "difficulty": "medium",
+      "category": "auth",
+      "expected_answer": "Secret Manager API (secret-api) — stockage sécurisé tous types de secrets. Pas l'API Key API qui est dédiée aux clés API émises."
+    },
+    {
+      "id": "Q100",
+      "question": "Quelle API permet d'enregistrer toutes les actions sensibles (qui a fait quoi, quand) pour audit ?",
+      "expected_apis": [
+        "audit-log-api"
+      ],
+      "difficulty": "medium",
+      "category": "auth",
+      "expected_answer": "Audit Log API — GET /v1/audit/logs et POST /v1/audit/export pour audit externe."
+    }
+  ]
+}

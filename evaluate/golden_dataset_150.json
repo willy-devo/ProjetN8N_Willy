@@ -1,0 +1,402 @@
+[
+  {
+    "id": "Q001",
+    "question": "Quelle API utiliser pour créer une nouvelle commande ?",
+    "expected_apis": ["order-api"],
+    "expected_answer": "Il faut utiliser l'Order API, endpoint POST /v4/orders",
+    "difficulty": "easy",
+    "category": "simple"
+  },
+  {
+    "id": "Q002",
+    "question": "Comment récupérer les informations d'un utilisateur ?",
+    "expected_apis": ["user-api"],
+    "expected_answer": "Utiliser l'User API avec GET /users/{id}",
+    "difficulty": "easy",
+    "category": "simple"
+  },
+  {
+    "id": "Q003",
+    "question": "Quelle API permet de rechercher des produits par mot-clé ?",
+    "expected_apis": ["search-api"],
+    "expected_answer": "Utiliser la Search API avec GET /v1/search?q={keyword}",
+    "difficulty": "easy",
+    "category": "simple"
+  },
+  {
+    "id": "Q004",
+    "question": "Je veux vérifier le stock disponible pour un produit",
+    "expected_apis": ["inventory-api"],
+    "expected_answer": "Utiliser l'Inventory API pour vérifier la disponibilité du stock",
+    "difficulty": "easy",
+    "category": "simple"
+  },
+  {
+    "id": "Q005",
+    "question": "Comment obtenir le prix d'un produit ?",
+    "expected_apis": ["pricing-api"],
+    "expected_answer": "Utiliser la Pricing API pour récupérer le prix d'un produit",
+    "difficulty": "easy",
+    "category": "simple"
+  },
+  {
+    "id": "Q006",
+    "question": "Quelle API gère l'authentification des utilisateurs ?",
+    "expected_apis": ["auth-api"],
+    "expected_answer": "Utiliser l'Auth API pour l'authentification et la gestion des tokens",
+    "difficulty": "easy",
+    "category": "simple"
+  },
+  {
+    "id": "Q007",
+    "question": "Comment ajouter un produit au panier ?",
+    "expected_apis": ["cart-api"],
+    "expected_answer": "Utiliser la Cart API avec POST /v1/cart/items pour ajouter un produit",
+    "difficulty": "easy",
+    "category": "simple"
+  },
+  {
+    "id": "Q008",
+    "question": "Quelle API utiliser pour envoyer une notification push à un utilisateur ?",
+    "expected_apis": ["notification-api"],
+    "expected_answer": "Utiliser la Notification API avec POST /v1/notifications/send et channel=push",
+    "difficulty": "easy",
+    "category": "simple"
+  },
+  {
+    "id": "Q009",
+    "question": "Comment suivre la livraison d'une commande ?",
+    "expected_apis": ["shipping-api"],
+    "expected_answer": "Utiliser la Shipping API pour suivre le statut de livraison",
+    "difficulty": "easy",
+    "category": "simple"
+  },
+  {
+    "id": "Q010",
+    "question": "Quelle API permet de laisser un avis sur un produit ?",
+    "expected_apis": ["review-api"],
+    "expected_answer": "Utiliser la Review API pour soumettre un avis produit",
+    "difficulty": "easy",
+    "category": "simple"
+  },
+  {
+    "id": "Q011",
+    "question": "Je veux gérer les utilisateurs de ma plateforme",
+    "expected_apis": ["user-api", "auth-api"],
+    "expected_answer": "Pour la gestion des utilisateurs, utiliser l'User API. Pour l'authentification, utiliser l'Auth API.",
+    "difficulty": "medium",
+    "category": "ambiguous"
+  },
+  {
+    "id": "Q012",
+    "question": "Comment connecter un utilisateur à mon application ?",
+    "expected_apis": ["auth-api"],
+    "expected_answer": "Utiliser l'Auth API pour la connexion et la gestion des sessions/tokens",
+    "difficulty": "medium",
+    "category": "ambiguous"
+  },
+  {
+    "id": "Q013",
+    "question": "Je veux afficher les produits disponibles à la vente",
+    "expected_apis": ["search-api", "inventory-api", "pricing-api"],
+    "expected_answer": "Combiner Search API pour trouver les produits, Inventory API pour vérifier le stock, Pricing API pour les prix",
+    "difficulty": "medium",
+    "category": "ambiguous"
+  },
+  {
+    "id": "Q014",
+    "question": "Quelle API gère les données clients ?",
+    "expected_apis": ["user-api"],
+    "expected_answer": "L'User API gère les données des utilisateurs/clients",
+    "difficulty": "medium",
+    "category": "ambiguous"
+  },
+  {
+    "id": "Q015",
+    "question": "Je veux envoyer un message à un utilisateur",
+    "expected_apis": ["notification-api"],
+    "expected_answer": "Utiliser la Notification API qui supporte email, SMS et push",
+    "difficulty": "medium",
+    "category": "ambiguous"
+  },
+  {
+    "id": "Q016",
+    "question": "Comment mettre à jour le profil d'un utilisateur tout en lui envoyant un email de confirmation ?",
+    "expected_apis": ["user-api", "notification-api"],
+    "expected_answer": "1) User API PUT /users/{id} pour mettre à jour le profil, 2) Notification API POST /v1/notifications/send avec channel=email pour la confirmation",
+    "difficulty": "hard",
+    "category": "multi_api"
+  },
+  {
+    "id": "Q017",
+    "question": "Je veux créer une commande, vérifier le stock et envoyer une confirmation",
+    "expected_apis": ["order-api", "inventory-api", "notification-api"],
+    "expected_answer": "1) Inventory API pour vérifier le stock, 2) Order API POST /v4/orders pour créer la commande, 3) Notification API pour envoyer la confirmation",
+    "difficulty": "hard",
+    "category": "multi_api"
+  },
+  {
+    "id": "Q018",
+    "question": "Comment implémenter un tunnel d'achat complet ?",
+    "expected_apis": ["cart-api", "pricing-api", "order-api", "notification-api", "shipping-api"],
+    "expected_answer": "Cart API pour le panier, Pricing API pour les prix, Order API pour créer la commande, Notification API pour confirmer, Shipping API pour le suivi",
+    "difficulty": "hard",
+    "category": "multi_api"
+  },
+  {
+    "id": "Q019",
+    "question": "Je veux afficher les avis d'un produit avec son prix",
+    "expected_apis": ["review-api", "pricing-api"],
+    "expected_answer": "Review API pour récupérer les avis, Pricing API pour le prix actuel",
+    "difficulty": "medium",
+    "category": "multi_api"
+  },
+  {
+    "id": "Q020",
+    "question": "Comment générer un rapport des ventes et notifier l'équipe ?",
+    "expected_apis": ["analytics-api", "notification-api"],
+    "expected_answer": "Analytics API pour générer le rapport de ventes, Notification API pour envoyer le rapport à l'équipe",
+    "difficulty": "hard",
+    "category": "multi_api"
+  },
+  {
+    "id": "Q021",
+    "question": "Quelle est la différence entre l'order-api v3 et v4 ?",
+    "expected_apis": ["order-api"],
+    "expected_answer": "L'Order API v4 est la version actuelle avec les endpoints /v4/orders",
+    "difficulty": "medium",
+    "category": "versioning"
+  },
+  {
+    "id": "Q022",
+    "question": "Quelle est la dernière version de l'API de commandes ?",
+    "expected_apis": ["order-api"],
+    "expected_answer": "La dernière version est v4, accessible via /v4/orders",
+    "difficulty": "easy",
+    "category": "versioning"
+  },
+  {
+    "id": "Q023",
+    "question": "Est-ce que l'API de recherche a plusieurs versions ?",
+    "expected_apis": ["search-api"],
+    "expected_answer": "La Search API est disponible en v1 via /v1/search",
+    "difficulty": "medium",
+    "category": "versioning"
+  },
+  {
+    "id": "Q024",
+    "question": "Quel endpoint utiliser pour modifier une commande existante ?",
+    "expected_apis": ["order-api"],
+    "expected_answer": "Utiliser PUT /v4/orders/{id} de l'Order API pour modifier une commande",
+    "difficulty": "medium",
+    "category": "endpoint_precise"
+  },
+  {
+    "id": "Q025",
+    "question": "Comment annuler une notification planifiée ?",
+    "expected_apis": ["notification-api"],
+    "expected_answer": "Utiliser DELETE /v1/notifications/{notification_id} — fonctionne uniquement si le statut est pending",
+    "difficulty": "medium",
+    "category": "endpoint_precise"
+  },
+  {
+    "id": "Q026",
+    "question": "Quel endpoint retourne les statistiques d'envoi des notifications ?",
+    "expected_apis": ["notification-api"],
+    "expected_answer": "GET /v1/notifications/stats retourne les statistiques d'envoi",
+    "difficulty": "medium",
+    "category": "endpoint_precise"
+  },
+  {
+    "id": "Q027",
+    "question": "Comment supprimer une commande ?",
+    "expected_apis": ["order-api"],
+    "expected_answer": "Utiliser DELETE /v4/orders/{id} de l'Order API",
+    "difficulty": "easy",
+    "category": "endpoint_precise"
+  },
+  {
+    "id": "Q028",
+    "question": "Quel endpoint utiliser pour planifier l'envoi d'un SMS pour demain ?",
+    "expected_apis": ["notification-api"],
+    "expected_answer": "POST /v1/notifications/schedule avec channel=sms et scheduled_at en ISO 8601",
+    "difficulty": "medium",
+    "category": "endpoint_precise"
+  },
+  {
+    "id": "Q029",
+    "question": "Quel endpoint de l'analytics API permet de voir le comportement utilisateur ?",
+    "expected_apis": ["analytics-api"],
+    "expected_answer": "GET /v1/analytics/conversion et POST /v1/analytics/reports permettent d'analyser le comportement",
+    "difficulty": "medium",
+    "category": "endpoint_precise"
+  },
+  {
+    "id": "Q030",
+    "question": "Quelle API gère la blockchain dans ce catalogue ?",
+    "expected_apis": [],
+    "expected_answer": "Il n'existe pas d'API blockchain dans le catalogue actuel",
+    "difficulty": "easy",
+    "category": "negative"
+  },
+  {
+    "id": "Q031",
+    "question": "Y a-t-il une API de paiement direct par carte bancaire ?",
+    "expected_apis": [],
+    "expected_answer": "Il n'y a pas d'API de paiement par carte bancaire dans le catalogue. La Pricing API gère les prix mais pas les transactions.",
+    "difficulty": "medium",
+    "category": "negative"
+  },
+  {
+    "id": "Q032",
+    "question": "Quelle API utiliser pour gérer les abonnements Netflix-like ?",
+    "expected_apis": [],
+    "expected_answer": "Il n'existe pas d'API de gestion d'abonnements dans le catalogue actuel",
+    "difficulty": "medium",
+    "category": "negative"
+  },
+  {
+    "id": "Q033",
+    "question": "Est-ce qu'il y a une API pour la reconnaissance faciale ?",
+    "expected_apis": [],
+    "expected_answer": "Non, il n'y a pas d'API de reconnaissance faciale dans ce catalogue",
+    "difficulty": "easy",
+    "category": "negative"
+  },
+  {
+    "id": "Q034",
+    "question": "Quelle API pour gérer un système de tickets support ?",
+    "expected_apis": [],
+    "expected_answer": "Il n'existe pas d'API de ticketing dans le catalogue. La Webhook API pourrait être utilisée pour des intégrations avec des outils externes.",
+    "difficulty": "medium",
+    "category": "negative"
+  },
+  {
+    "id": "Q035",
+    "question": "Quelles APIs nécessitent une authentification Bearer Token ?",
+    "expected_apis": ["auth-api", "order-api", "user-api", "notification-api"],
+    "expected_answer": "La plupart des APIs utilisent Bearer Token JWT. L'Auth API génère ces tokens.",
+    "difficulty": "hard",
+    "category": "authorization"
+  },
+  {
+    "id": "Q036",
+    "question": "Comment obtenir un token pour appeler l'Order API ?",
+    "expected_apis": ["auth-api", "order-api"],
+    "expected_answer": "1) Utiliser l'Auth API pour s'authentifier et obtenir un Bearer Token, 2) Inclure ce token dans le header Authorization des appels Order API",
+    "difficulty": "medium",
+    "category": "authorization"
+  },
+  {
+    "id": "Q037",
+    "question": "Quels droits faut-il pour envoyer des notifications ?",
+    "expected_apis": ["notification-api"],
+    "expected_answer": "La Notification API requiert un Bearer Token avec les scopes appropriés selon le canal (email, SMS, push)",
+    "difficulty": "medium",
+    "category": "authorization"
+  },
+  {
+    "id": "Q038",
+    "question": "Quelle API utiliser pour les tableaux de bord business ?",
+    "expected_apis": ["analytics-api"],
+    "expected_answer": "L'Analytics API avec GET /v1/analytics/dashboard pour les tableaux de bord et POST /v1/analytics/reports pour les rapports personnalisés",
+    "difficulty": "medium",
+    "category": "use_case"
+  },
+  {
+    "id": "Q039",
+    "question": "Je veux construire une page produit complète",
+    "expected_apis": ["search-api", "pricing-api", "inventory-api", "review-api"],
+    "expected_answer": "Search API pour les détails produit, Pricing API pour le prix, Inventory API pour la disponibilité, Review API pour les avis",
+    "difficulty": "hard",
+    "category": "use_case"
+  },
+  {
+    "id": "Q040",
+    "question": "Comment implémenter des webhooks pour les événements de commande ?",
+    "expected_apis": ["webhook-api"],
+    "expected_answer": "Utiliser la Webhook API pour s'abonner aux événements de commande et recevoir des notifications en temps réel",
+    "difficulty": "medium",
+    "category": "use_case"
+  },
+  {
+    "id": "Q041",
+    "question": "Quelle API pour calculer les frais de livraison avant validation du panier ?",
+    "expected_apis": ["shipping-api"],
+    "expected_answer": "La Shipping API permet de calculer les frais de livraison selon l'adresse et le poids",
+    "difficulty": "medium",
+    "category": "use_case"
+  },
+  {
+    "id": "Q042",
+    "question": "Je veux analyser le taux de conversion de mon site",
+    "expected_apis": ["analytics-api"],
+    "expected_answer": "Analytics API avec GET /v1/analytics/conversion pour analyser le taux de conversion",
+    "difficulty": "easy",
+    "category": "use_case"
+  },
+  {
+    "id": "Q043",
+    "question": "Quelle est la différence entre la Cart API et l'Order API ?",
+    "expected_apis": ["cart-api", "order-api"],
+    "expected_answer": "La Cart API gère le panier temporaire (avant achat), l'Order API gère les commandes confirmées (après achat)",
+    "difficulty": "hard",
+    "category": "ambiguous"
+  },
+  {
+    "id": "Q044",
+    "question": "Quelle API utiliser pour afficher l'historique des achats d'un client ?",
+    "expected_apis": ["order-api"],
+    "expected_answer": "L'Order API avec GET /v4/orders permet de récupérer l'historique des commandes d'un utilisateur",
+    "difficulty": "medium",
+    "category": "use_case"
+  },
+  {
+    "id": "Q045",
+    "question": "Comment notifier automatiquement un client quand sa commande est expédiée ?",
+    "expected_apis": ["shipping-api", "notification-api", "webhook-api"],
+    "expected_answer": "Webhook API pour détecter l'événement d'expédition, Shipping API pour le tracking, Notification API pour envoyer l'alerte au client",
+    "difficulty": "hard",
+    "category": "multi_api"
+  },
+  {
+    "id": "Q046",
+    "question": "Quelle API gère les retours de commandes ?",
+    "expected_apis": ["order-api"],
+    "expected_answer": "L'Order API gère le cycle de vie complet des commandes y compris les modifications via PUT /v4/orders/{id}",
+    "difficulty": "medium",
+    "category": "use_case"
+  },
+  {
+    "id": "Q047",
+    "question": "Comment intégrer mon système avec des outils externes comme Slack ?",
+    "expected_apis": ["webhook-api"],
+    "expected_answer": "La Webhook API permet d'envoyer des événements vers des outils externes comme Slack via des endpoints configurables",
+    "difficulty": "medium",
+    "category": "use_case"
+  },
+  {
+    "id": "Q048",
+    "question": "Quelle API pour appliquer un code promo sur une commande ?",
+    "expected_apis": ["pricing-api", "order-api"],
+    "expected_answer": "La Pricing API gère les remises et codes promo, l'Order API applique le prix final à la commande",
+    "difficulty": "hard",
+    "category": "ambiguous"
+  },
+  {
+    "id": "Q049",
+    "question": "Je veux mesurer les performances de mon moteur de recherche interne",
+    "expected_apis": ["analytics-api", "search-api"],
+    "expected_answer": "Analytics API pour mesurer les métriques de recherche, Search API pour les données de recherche brutes",
+    "difficulty": "hard",
+    "category": "use_case"
+  },
+  {
+    "id": "Q050",
+    "question": "Quelle API utiliser pour récupérer toutes les commandes en attente de livraison ?",
+    "expected_apis": ["order-api", "shipping-api"],
+    "expected_answer": "Order API GET /v4/orders avec filtre sur le statut, Shipping API pour le détail du statut de livraison",
+    "difficulty": "medium",
+    "category": "use_case"
+  }
+]
