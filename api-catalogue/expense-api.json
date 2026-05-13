@@ -1,14 +1,14 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "A/B Testing API",
+    "title": "Expense API",
     "version": "1.0.0",
-    "x-api-id": "ab-testing-api",
+    "x-api-id": "expense-api",
     "x-api-version": "v1",
     "x-status": "active",
-    "x-team": "Equipe Data",
-    "x-domain": "Analytics & BI",
-    "description": "Expérimentations et tests A/B. Variantes, assignation et analyse statistique des résultats."
+    "x-team": "Equipe Finance",
+    "x-domain": "Human Resources",
+    "description": "Notes de frais et remboursements employés. Soumission, validation et virement."
   },
   "servers": [
     {
@@ -17,57 +17,26 @@
     }
   ],
   "paths": {
-    "/v1/experiments": {
+    "/v1/expenses": {
       "post": {
-        "summary": "Créer une expérience A/B",
-        "operationId": "createExperiment",
+        "summary": "Soumettre une note de frais",
+        "operationId": "createExpense",
         "tags": [
-          "Experiments"
+          "Expenses"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "required": [
-                  "name",
-                  "variants"
-                ],
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "variants": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string"
-                        },
-                        "traffic_percent": {
-                          "type": "number"
-                        }
-                      }
-                    }
-                  },
-                  "hypothesis": {
-                    "type": "string"
-                  },
-                  "metric_to_optimize": {
-                    "type": "string"
-                  }
-                }
+                "$ref": "#/components/schemas/ExpenseCreate"
               }
             }
           }
         },
         "responses": {
           "201": {
-            "description": "Créée"
+            "description": "Soumise"
           }
         },
         "security": [
@@ -77,14 +46,37 @@
         ]
       },
       "get": {
-        "summary": "Lister les expériences",
-        "operationId": "listExperiments",
+        "summary": "Lister les notes de frais",
+        "operationId": "listExpenses",
         "tags": [
-          "Experiments"
+          "Expenses"
+        ],
+        "parameters": [
+          {
+            "name": "employee_id",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "draft",
+                "submitted",
+                "approved",
+                "rejected",
+                "paid"
+              ]
+            }
+          }
         ],
         "responses": {
           "200": {
-            "description": "Expériences"
+            "description": "Notes de frais"
           }
         },
         "security": [
@@ -94,7 +86,7 @@
         ]
       }
     },
-    "/v1/experiments/{id}": {
+    "/v1/expenses/{id}": {
       "parameters": [
         {
           "name": "id",
@@ -106,14 +98,14 @@
         }
       ],
       "get": {
-        "summary": "Détails d'une expérience",
-        "operationId": "getExperiment",
+        "summary": "Détails d'une note de frais",
+        "operationId": "getExpense",
         "tags": [
-          "Experiments"
+          "Expenses"
         ],
         "responses": {
           "200": {
-            "description": "Expérience"
+            "description": "Note de frais"
           }
         },
         "security": [
@@ -123,7 +115,7 @@
         ]
       }
     },
-    "/v1/experiments/{id}/assign": {
+    "/v1/expenses/{id}/approve": {
       "parameters": [
         {
           "name": "id",
@@ -134,22 +126,19 @@
           }
         }
       ],
-      "post": {
-        "summary": "Assigner un utilisateur à une variante",
-        "operationId": "assignVariant",
+      "put": {
+        "summary": "Approuver",
+        "operationId": "approveExpense",
         "tags": [
-          "Experiments"
+          "Expenses"
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": [
-                  "user_id"
-                ],
                 "properties": {
-                  "user_id": {
+                  "comment": {
                     "type": "string"
                   }
                 }
@@ -159,7 +148,7 @@
         },
         "responses": {
           "200": {
-            "description": "Variante assignée"
+            "description": "Approuvée"
           }
         },
         "security": [
@@ -169,7 +158,7 @@
         ]
       }
     },
-    "/v1/experiments/{id}/convert": {
+    "/v1/expenses/{id}/reject": {
       "parameters": [
         {
           "name": "id",
@@ -180,11 +169,11 @@
           }
         }
       ],
-      "post": {
-        "summary": "Enregistrer une conversion",
-        "operationId": "recordConversion",
+      "put": {
+        "summary": "Rejeter",
+        "operationId": "rejectExpense",
         "tags": [
-          "Experiments"
+          "Expenses"
         ],
         "requestBody": {
           "content": {
@@ -192,19 +181,11 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "user_id",
-                  "metric",
-                  "value"
+                  "reason"
                 ],
                 "properties": {
-                  "user_id": {
+                  "reason": {
                     "type": "string"
-                  },
-                  "metric": {
-                    "type": "string"
-                  },
-                  "value": {
-                    "type": "number"
                   }
                 }
               }
@@ -213,36 +194,7 @@
         },
         "responses": {
           "200": {
-            "description": "Conversion enregistrée"
-          }
-        },
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/v1/experiments/{id}/results": {
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "get": {
-        "summary": "Résultats statistiques de l'expérience",
-        "operationId": "getExperimentResults",
-        "tags": [
-          "Experiments"
-        ],
-        "responses": {
-          "200": {
-            "description": "Résultats avec p-value et uplift"
+            "description": "Rejetée"
           }
         },
         "security": [
@@ -255,12 +207,54 @@
   },
   "components": {
     "schemas": {
+      "ExpenseCreate": {
+        "type": "object",
+        "required": [
+          "employee_id",
+          "amount",
+          "currency",
+          "category",
+          "date"
+        ],
+        "properties": {
+          "employee_id": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number"
+          },
+          "currency": {
+            "type": "string",
+            "default": "EUR"
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "travel",
+              "meals",
+              "accommodation",
+              "equipment",
+              "other"
+            ]
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "description": {
+            "type": "string"
+          },
+          "receipt_url": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
       "Error": {
         "type": "object",
         "properties": {
           "code": {
-            "type": "string",
-            "example": "NOT_FOUND"
+            "type": "string"
           },
           "message": {
             "type": "string"
@@ -284,7 +278,7 @@
         }
       },
       "Unauthorized": {
-        "description": "Clé API manquante ou invalide",
+        "description": "Clé API invalide",
         "content": {
           "application/json": {
             "schema": {
@@ -304,7 +298,7 @@
         }
       },
       "Conflict": {
-        "description": "Conflit — ressource déjà existante ou état incompatible",
+        "description": "Conflit d'état",
         "content": {
           "application/json": {
             "schema": {
@@ -319,7 +313,7 @@
         "type": "apiKey",
         "in": "header",
         "name": "X-API-Key",
-        "description": "Clé API Kong Gateway"
+        "description": "Clé API Kong Gateway — contacter votre équipe platform"
       }
     }
   }
