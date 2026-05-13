@@ -11,7 +11,7 @@ import os
 from typing import Annotated, Optional
 from dotenv import load_dotenv
 
-from langchain_mistralai import ChatMistralAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langchain_core.runnables.graph import MermaidDrawMethod
 from langgraph.graph import StateGraph, END
@@ -95,13 +95,12 @@ class AgentState(TypedDict):
     messages: Annotated[list, add_messages]
 
 
-# ── LLM Mistral ───────────────────────────────────────────────────
-llm = ChatMistralAI(
-    model="mistral-small-latest",
-    api_key=os.getenv("MISTRAL_API_KEY"),
+# ── LLM Gemini ───────────────────────────────────────────────────
+llm = ChatGoogleGenerativeAI(
+    model="gemini-2.5-flash-lite",
+    google_api_key=os.getenv("GEMINI_API_KEY"),
     temperature=0,
 ).bind_tools([search_apis])
-
 
 # ── Nœud Agent ────────────────────────────────────────────────────
 def agent_node(state: AgentState) -> dict:

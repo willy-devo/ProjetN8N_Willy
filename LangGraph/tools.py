@@ -19,7 +19,7 @@ load_dotenv()
 # Identique à ce que le nœud HTTP Request de N8N appelait
 KONG_URL      = os.getenv("KONG_URL", "http://localhost:8000")
 KONG_API_KEY  = os.getenv("KONG_API_KEY", "n8n-internal-key-2025")
-MCP_ENDPOINT  = f"{KONG_URL}/mcp/tools/search_apis"
+MCP_ENDPOINT  = f"{KONG_URL}/mcp-gemini/tools/search_apis"
 
 
 # ── Tool : search_apis ────────────────────────────────────────────

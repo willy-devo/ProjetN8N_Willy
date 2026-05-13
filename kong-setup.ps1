@@ -34,11 +34,34 @@ Invoke-RestMethod -Method POST "$KONG/services" -ContentType "application/json" 
   port     = 3000
 } | ConvertTo-Json)
 
+# ── 3b. Service MCP Gemini ────────────────────────────────────────
+Write-Host "3b. Création service mcp-server-gemini..." -ForegroundColor Cyan
+try {
+    Invoke-RestMethod -Method POST "$KONG/services" -ContentType "application/json" -ErrorAction Stop -Body (@{
+        name     = "mcp-server-gemini"
+        protocol = "http"
+        host     = "mcp-server-gemini"
+        port     = 3000
+    } | ConvertTo-Json)
+    Write-Host "   -> Service créé." -ForegroundColor Green
+} catch {
+    Write-Host "   -> Déjà existant ou erreur : $_" -ForegroundColor Yellow
+}
+
 # ── 4. Route /mcp ─────────────────────────────────────────────────
 Write-Host "4. Création route /mcp..." -ForegroundColor Cyan
 Invoke-RestMethod -Method POST "$KONG/services/mcp-server/routes" -ContentType "application/json" -Body (@{
   name       = "mcp-route"
   paths      = @("/mcp")
+  strip_path = $true
+} | ConvertTo-Json)
+
+# ── 4b. Route /mcp-gemini ─────────────────────────────────────────
+Write-Host "4b. Création route /mcp-gemini..." -ForegroundColor Cyan
+Invoke-RestMethod -Method POST "$KONG/services/mcp-server-gemini/routes" -ContentType "application/json" -Body (@{
+  name       = "mcp-gemini-route"
+  # La route externe que LangGraph/n8n devra appeler sur Kong
+  paths      = @("/mcp-gemini") 
   strip_path = $true
 } | ConvertTo-Json)
 
@@ -52,6 +75,13 @@ Invoke-RestMethod -Method POST "$KONG/services/mistral-llm/plugins" -ContentType
 # ── 6. Key Auth sur mcp-server ────────────────────────────────────
 Write-Host "6. Plugin Key Auth sur mcp-server..." -ForegroundColor Cyan
 Invoke-RestMethod -Method POST "$KONG/services/mcp-server/plugins" -ContentType "application/json" -Body (@{
+  name   = "key-auth"
+  config = @{ key_names = @("apikey") }
+} | ConvertTo-Json -Depth 5)
+
+# ── 6b. Key Auth sur mcp-server-gemini ────────────────────────────
+Write-Host "6b. Plugin Key Auth sur mcp-server-gemini..." -ForegroundColor Cyan
+Invoke-RestMethod -Method POST "$KONG/services/mcp-server-gemini/plugins" -ContentType "application/json" -Body (@{
   name   = "key-auth"
   config = @{ key_names = @("apikey") }
 } | ConvertTo-Json -Depth 5)

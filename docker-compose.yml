@@ -29,7 +29,9 @@ services:
   kong-migration:
     image: kong/kong-gateway:3.6
     container_name: kong-migration
-    command: kong migrations bootstrap
+    command: >
+      sh -c "kong migrations bootstrap 2>/dev/null || true &&
+             kong migrations up"
     environment:
       KONG_DATABASE: postgres
       KONG_PG_HOST: kong-db
@@ -42,6 +44,7 @@ services:
       kong-db:
         condition: service_healthy
     restart: on-failure
+
 
   kong:
     image: kong/kong-gateway:3.6
@@ -69,6 +72,8 @@ services:
     depends_on:
       kong-db:
         condition: service_healthy
+      kong-migration:                              # ← AJOUT
+        condition: service_completed_successfully 
     restart: on-failure
     healthcheck:
       test: ["CMD", "kong", "health"]
@@ -97,6 +102,22 @@ services:
     networks:
       - ai-network
 
+# --- NOUVEAU : Conteneur dédié à Gemini ---
+  mcp-server-gemini:
+    build: ./mcp-server
+    container_name: mcp-server-gemini
+    env_file: .env
+    command: ["node", "server_gemini.js"]
+    ports:
+      - "3001:3000" # Mapping externe 3001 -> interne 3000
+    networks:
+      - ai-network
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+
   
   chat:
     build:
@@ -110,6 +131,7 @@ services:
       KONG_URL: http://kong:8000
       KONG_API_KEY: ${KONG_API_KEY:-n8n-internal-key-2025}
       MISTRAL_API_KEY: ${MISTRAL_API_KEY}
+      MCP_GEMINI_URL: http://kong:8000/mcp-gemini
     ports:
       - "8080:8080"
     networks:
@@ -119,12 +141,16 @@ services:
         condition: service_healthy
       mcp-server:
         condition: service_healthy
+      mcp-server-gemini: # <-- AJOUT : Attente du conteneur Gemini
+        condition: service_healthy
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-fsS", "http://localhost:8080/"]
       interval: 30s
       timeout: 10s
       retries: 3
+
+
   # n8n:
   #   image: n8nio/n8n:latest
   #   container_name: n8n

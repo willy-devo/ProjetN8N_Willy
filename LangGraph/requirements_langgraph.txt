@@ -8,6 +8,7 @@ langgraph>=0.2.60,<0.3.0
 langchain>=0.3.14,<0.4.0
 langchain-core>=0.3.29,<0.4.0
 langchain-mistralai>=0.2.4,<0.3.0
+langchain-google-genai
 
 # Interface chat — Chainlit 2.x corrige l'incompatibilité Pydantic
 # (bug "CodeSettings is not fully defined" présent en 1.3.2)
