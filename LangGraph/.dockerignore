@@ -1,0 +1,53 @@
+# ─────────────────────────────────────────────
+# .dockerignore — Allège l'image et accélère le build
+# ─────────────────────────────────────────────
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+.Python
+build/
+dist/
+
+# Environnements virtuels (évite de copier un venv local)
+.venv/
+venv/
+env/
+ENV/
+
+# Secrets et config locale
+.env
+.env.local
+*.pem
+*.key
+
+# Caches Chainlit / LangGraph / IDE
+.chainlit/
+.files/
+.langgraph_api/
+.idea/
+.vscode/
+*.swp
+
+# Git & Docker (on ne se copie pas soi-même)
+.git/
+.gitignore
+.dockerignore
+Dockerfile
+docker-compose.yml
+docker-compose.override.yml
+
+# Documentation
+README.md
+*.md
+LOGS/
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

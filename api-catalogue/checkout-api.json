@@ -1,14 +1,15 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "A/B Testing API",
+    "title": "Checkout API",
     "version": "1.0.0",
-    "x-api-id": "ab-testing-api",
+    "x-api-id": "checkout-api",
     "x-api-version": "v1",
     "x-status": "active",
-    "x-team": "Equipe Data",
-    "x-domain": "Analytics & BI",
-    "description": "Expérimentations et tests A/B. Variantes, assignation et analyse statistique des résultats."
+    "x-team": "Equipe Commerce",
+    "x-domain": "E-Commerce",
+    "description": "Tunnel d'achat et validation de commande. Orchestration du processus checkout : adresse, livraison, paiement. DIFFÉRENCE vs cart-api : Cart stocke les articles, Checkout orchestre les étapes de validation (adresse→livraison→paiement→confirmation). DIFFÉRENCE vs order-api : Checkout est le processus avant la commande, Order est le résultat après.",
+    "x-false-positive-warning": "Panier d'articles → cart-api. Commande confirmée → order-api."
   },
   "servers": [
     {
@@ -17,47 +18,24 @@
     }
   ],
   "paths": {
-    "/v1/experiments": {
+    "/v1/checkout/start": {
       "post": {
-        "summary": "Créer une expérience A/B",
-        "operationId": "createExperiment",
+        "summary": "Démarrer une session checkout depuis le panier",
+        "operationId": "startCheckout",
         "tags": [
-          "Experiments"
+          "Checkout"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "required": [
-                  "name",
-                  "variants"
+                  "cart_id"
                 ],
                 "properties": {
-                  "name": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "variants": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "name": {
-                          "type": "string"
-                        },
-                        "traffic_percent": {
-                          "type": "number"
-                        }
-                      }
-                    }
-                  },
-                  "hypothesis": {
-                    "type": "string"
-                  },
-                  "metric_to_optimize": {
+                  "cart_id": {
                     "type": "string"
                   }
                 }
@@ -67,7 +45,85 @@
         },
         "responses": {
           "201": {
-            "description": "Créée"
+            "description": "Session checkout créée avec ID"
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/checkout/{sessionId}/address": {
+      "parameters": [
+        {
+          "name": "sessionId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "put": {
+        "summary": "Étape 1 : Définir l'adresse de livraison",
+        "operationId": "setCheckoutAddress",
+        "tags": [
+          "Checkout"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "shipping_address"
+                ],
+                "properties": {
+                  "shipping_address": {
+                    "type": "object"
+                  },
+                  "billing_address": {
+                    "type": "object"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Adresse enregistrée"
+          }
+        },
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/checkout/{sessionId}/shipping": {
+      "parameters": [
+        {
+          "name": "sessionId",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Étape 2 : Options de livraison disponibles",
+        "operationId": "getCheckoutShipping",
+        "tags": [
+          "Checkout"
+        ],
+        "responses": {
+          "200": {
+            "description": "Options de livraison avec tarifs"
           }
         },
         "security": [
@@ -76,69 +132,11 @@
           }
         ]
       },
-      "get": {
-        "summary": "Lister les expériences",
-        "operationId": "listExperiments",
+      "put": {
+        "summary": "Sélectionner une option de livraison",
+        "operationId": "selectCheckoutShipping",
         "tags": [
-          "Experiments"
-        ],
-        "responses": {
-          "200": {
-            "description": "Expériences"
-          }
-        },
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/v1/experiments/{id}": {
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "get": {
-        "summary": "Détails d'une expérience",
-        "operationId": "getExperiment",
-        "tags": [
-          "Experiments"
-        ],
-        "responses": {
-          "200": {
-            "description": "Expérience"
-          }
-        },
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ]
-      }
-    },
-    "/v1/experiments/{id}/assign": {
-      "parameters": [
-        {
-          "name": "id",
-          "in": "path",
-          "required": true,
-          "schema": {
-            "type": "string"
-          }
-        }
-      ],
-      "post": {
-        "summary": "Assigner un utilisateur à une variante",
-        "operationId": "assignVariant",
-        "tags": [
-          "Experiments"
+          "Checkout"
         ],
         "requestBody": {
           "content": {
@@ -146,10 +144,10 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "user_id"
+                  "shipping_option_id"
                 ],
                 "properties": {
-                  "user_id": {
+                  "shipping_option_id": {
                     "type": "string"
                   }
                 }
@@ -159,7 +157,7 @@
         },
         "responses": {
           "200": {
-            "description": "Variante assignée"
+            "description": "Option sélectionnée"
           }
         },
         "security": [
@@ -169,10 +167,10 @@
         ]
       }
     },
-    "/v1/experiments/{id}/convert": {
+    "/v1/checkout/{sessionId}/payment": {
       "parameters": [
         {
-          "name": "id",
+          "name": "sessionId",
           "in": "path",
           "required": true,
           "schema": {
@@ -180,11 +178,11 @@
           }
         }
       ],
-      "post": {
-        "summary": "Enregistrer une conversion",
-        "operationId": "recordConversion",
+      "put": {
+        "summary": "Étape 3 : Définir le moyen de paiement",
+        "operationId": "setCheckoutPayment",
         "tags": [
-          "Experiments"
+          "Checkout"
         ],
         "requestBody": {
           "content": {
@@ -192,19 +190,20 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "user_id",
-                  "metric",
-                  "value"
+                  "payment_method"
                 ],
                 "properties": {
-                  "user_id": {
-                    "type": "string"
+                  "payment_method": {
+                    "type": "string",
+                    "enum": [
+                      "card",
+                      "paypal",
+                      "sepa",
+                      "wallet"
+                    ]
                   },
-                  "metric": {
+                  "card_token": {
                     "type": "string"
-                  },
-                  "value": {
-                    "type": "number"
                   }
                 }
               }
@@ -213,7 +212,7 @@
         },
         "responses": {
           "200": {
-            "description": "Conversion enregistrée"
+            "description": "Paiement défini"
           }
         },
         "security": [
@@ -223,10 +222,10 @@
         ]
       }
     },
-    "/v1/experiments/{id}/results": {
+    "/v1/checkout/{sessionId}/confirm": {
       "parameters": [
         {
-          "name": "id",
+          "name": "sessionId",
           "in": "path",
           "required": true,
           "schema": {
@@ -234,15 +233,21 @@
           }
         }
       ],
-      "get": {
-        "summary": "Résultats statistiques de l'expérience",
-        "operationId": "getExperimentResults",
+      "post": {
+        "summary": "Étape finale : Confirmer et créer la commande",
+        "operationId": "confirmCheckout",
         "tags": [
-          "Experiments"
+          "Checkout"
         ],
         "responses": {
-          "200": {
-            "description": "Résultats avec p-value et uplift"
+          "201": {
+            "description": "Commande créée — order_id retourné"
+          },
+          "402": {
+            "description": "Paiement refusé"
+          },
+          "409": {
+            "description": "Stock insuffisant"
           }
         },
         "security": [
@@ -259,8 +264,7 @@
         "type": "object",
         "properties": {
           "code": {
-            "type": "string",
-            "example": "NOT_FOUND"
+            "type": "string"
           },
           "message": {
             "type": "string"
@@ -284,7 +288,7 @@
         }
       },
       "Unauthorized": {
-        "description": "Clé API manquante ou invalide",
+        "description": "Clé API invalide",
         "content": {
           "application/json": {
             "schema": {
@@ -304,7 +308,7 @@
         }
       },
       "Conflict": {
-        "description": "Conflit — ressource déjà existante ou état incompatible",
+        "description": "Conflit d'état",
         "content": {
           "application/json": {
             "schema": {
@@ -319,7 +323,7 @@
         "type": "apiKey",
         "in": "header",
         "name": "X-API-Key",
-        "description": "Clé API Kong Gateway"
+        "description": "Clé API Kong Gateway — contacter votre équipe platform"
       }
     }
   }
