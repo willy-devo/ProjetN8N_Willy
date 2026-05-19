@@ -8,7 +8,7 @@
     "x-status": "active",
     "x-team": "Equipe Data",
     "x-domain": "Analytics & BI",
-    "description": "Expérimentations et tests A/B. Variantes, assignation et analyse statistique des résultats."
+    "description": "Expérimentations et tests A/B. Variantes, assignation et analyse statistique des résultats"
   },
   "servers": [
     {
